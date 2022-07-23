@@ -96,11 +96,12 @@ const WriteBox = styled.div``;
 
 const Subject = styled.h3`
   margin: 15px 0 3px 0 ;
-  font-size: 15px;
+  font-size: 12px;
   /* width: 60%; */
   display: flex;
   padding-left: 18%;
-  
+  color: white;
+  text-shadow: 1px 0 1px #2f4858, 3px 0 4px #0c7586, 2px 0 2px #2f4858;
 `;
 
 const InputWrap = styled.div` 
@@ -138,7 +139,7 @@ const Button = styled.button`
 `;
 
 const Back = styled.button`
-  width: 170px;
+  width: 48%;
   height: 34px;
   border: 2px solid lightslategray;
   background-color: white;

@@ -88,7 +88,7 @@ const TextOne = styled.h3`
   margin-top: 0;
   margin-bottom: 20px;
   color: white;
-  font-size: 15px;
+  font-size: 13px;
   display: inline;
   
 `;
@@ -97,7 +97,7 @@ const Text = styled.h3`
   margin-top: 0;
   margin-bottom: 20px;
   color: white;
-  font-size: 15px;
+  font-size: 13px;
   display: inline;
   &:hover {
     text-shadow: 2px 0 2px #2f4858;
