@@ -1,11 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
 import Logo from '../../logo.png'
 
 const Posts = () => {
+
+  const navigate = useNavigate()
+
   return (
-    <Post>
+    <Post onClick={() => {
+      navigate('/boards/details/Post_id')
+    }}>
       <Wrap>
         <ImgWrap>
           <img src={Logo} alt="" />
