@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react'
 import styled from "styled-components";
 import {useNavigate}  from 'react-router-dom';
 
-const Login = () => {
+const Signup = () => {
 
     const navigate = useNavigate();
 
@@ -11,18 +11,22 @@ const Login = () => {
       <Wrap>
         {/* <Box> */}
         <LoginWrap>
-          <Title>Selecthing</Title>
-          <br /> <Id type="text" placeholder="ID를 입력해주세요" /> <br />
-          <Id type="password" placeholder="PW를 입력해주세요" /> <br />
-          <Text>아직 회원이 아니신가요?</Text> <Text onClick={() => {navigate("/Login/Signup");}}>회원가입</Text>
-          <button>로그인</button>
+          <Title>Selecthing</Title><br />
+          닉네임 <br/><Id type="text" placeholder="닉네임을 입력해주세요" /> <br />
+          아이디 <br/> <Id type="password" placeholder="아이디를 입력해주세요" /> <br />
+          비밀번호<br/> <Id type="password" placeholder="비밀번호를 입력해주세요" /> <br />
+          비밀번호 재확인<br/><Id type="password" placeholder="비밀번호 재확인" /> <br />
+          
+          <button onClick={() => {navigate("/Login");}}>뒤로가기</button>
+          <button>회원가입</button>
         </LoginWrap>
 
         {/* </Box> */}
       </Wrap>
     </div>
-  );
-};
+  )
+}
+
 
 const Wrap = styled.div`
   background-color: rgb(26, 188, 156);
@@ -67,4 +71,4 @@ const Text = styled.h3`
   font-size: 15px;
 `;
 
-export default Login;
+export default Signup
