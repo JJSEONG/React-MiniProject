@@ -11,7 +11,8 @@ const Header = () => {
 }
 
 const HeaderWrap = styled.div`
-  position: relative;
+  position: fixed;
+  top: 0;
   width: 100%;
   height: 80px;
   background-color: rgb(26, 188, 156);
