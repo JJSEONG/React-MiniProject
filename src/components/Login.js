@@ -15,7 +15,7 @@ const Login = () => {
           <br /> <Id type="text" placeholder="ID를 입력해주세요" /> <br />
           <Id type="password" placeholder="PW를 입력해주세요" /> <br />
           <Text>아직 회원이 아니신가요?</Text> <Text onClick={() => {navigate("/Login/Signup");}}>회원가입</Text>
-          <button>로그인</button>
+          <br/><button>로그인</button>
         </LoginWrap>
 
         {/* </Box> */}
@@ -44,8 +44,13 @@ const LoginWrap = styled.div`
 
 const Title = styled.h1`
   margin: 0;
-  color: white;
-  font-size: 40px;
+  color: #EDFDF8;
+  font-size: 38px;
+  font-style: italic;
+  text-shadow:
+    2px 0 2px #2F4858,
+    4px 0 5px #0C7586,
+    6px 0 8px #2F4858;
 `;
 
 const Id = styled.input`
@@ -62,9 +67,11 @@ const Id = styled.input`
 
 const Text = styled.h3`
   margin-top: 0;
-  margin-bottom :5px;
+  margin-bottom :10px;
   color: white;
   font-size: 15px;
+  display: inline;
+  /* cursor: pointer; */
 `;
 
 export default Login;
