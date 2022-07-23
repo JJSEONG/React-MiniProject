@@ -15,7 +15,7 @@ const Signup = () => {
           <WriteBox>
             <Subject>닉네임</Subject>
             <InputWrap>
-              <Id type="text" placeholder="닉네임을 입력해주세요"/>
+              <Id type="text" placeholder="닉네임을 입력해주세요" maxLength={12}/>
               <Button>중복확인</Button>
             </InputWrap>
           </WriteBox>
@@ -23,7 +23,7 @@ const Signup = () => {
           <WriteBox>
             <Subject>아이디</Subject>
             <InputWrap>
-            <Id type="text" placeholder="아이디를 입력해주세요" />
+            <Id type="text" placeholder="아이디를 입력해주세요"  maxLength={12}/>
             <Button>중복확인</Button>
             </InputWrap>
           </WriteBox>
@@ -71,7 +71,7 @@ const Wrap = styled.div`
 `;
 
 const LoginWrap = styled.div`
-  width: 60%;
+  width: 40%;
   height: 80%;
   margin: auto;
   /* border : 1.5px solid lightslategray; */
@@ -84,7 +84,7 @@ const LoginWrap = styled.div`
 const Title = styled.h1`
   margin: 0;
   color: #edfdf8;
-  font-size: 38px;
+  font-size: 42px;
   font-style: italic;
   text-shadow: 2px 0 2px #2f4858, 4px 0 5px #0c7586, 6px 0 8px #2f4858;
   font-family: "Russo One", sans-serif;
@@ -97,7 +97,7 @@ const WriteBox = styled.div``;
 const Subject = styled.h3`
   margin: 15px 0 3px 0 ;
   font-size: 12px;
-  /* width: 60%; */
+  /* width: 40%; */
   display: flex;
   padding-left: 18%;
   color: white;
@@ -105,7 +105,7 @@ const Subject = styled.h3`
 `;
 
 const InputWrap = styled.div` 
-  height: 40px;
+  height: 43px;
   width: 65%;
   margin : 0 auto;
   position: relative;
