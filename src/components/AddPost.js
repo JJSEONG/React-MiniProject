@@ -22,8 +22,8 @@ const AddPost = () => {
           <input type="file" id="file" style={{display: "none"}} />
         </Filewrap>
         <MbtiWrap>
-          <form style={{ width: "100%", margin: "0 auto" }}>
-            <label htmlFor="mbti">나의 MBTI는 ? </label>
+          <form style={{ display:"flex", justifyContent:"space-between", alignItems:"center", width: "100%", height: "34px", margin: "0 auto" }}>
+            <SelectLabel htmlFor="mbti">MBTI</SelectLabel>
             <SelectBtn defaultValue="default" id="mbti" name="mbti">
               <option value="default" disabled>MBTI를 선택하세요</option>
               <option value="ISTJ">ISTJ [세상의 소금형]</option>
@@ -51,7 +51,6 @@ const AddPost = () => {
             <input type="text" id="topic" placeholder='주제를 입력해주세요.' />
           </Topic>
           <Desc>
-            <label htmlFor="desc">내용</label>
             <textarea id="desc" cols="30" rows="10" placeholder='주제에 대한 내용을 입력해주세요.'></textarea>
           </Desc>
         </DescWrap>
@@ -77,7 +76,7 @@ const MainWrap = styled.div`
 `
 
 const SubTitle = styled.h2`
-  margin: 140px auto 30px;
+  margin: 120px auto 30px;
   font-family: 'Russo One',sans-serif;
   font-size: 28px;
   font-style: italic;
@@ -145,12 +144,23 @@ const MbtiWrap = styled.div`
   align-items: center;
 `
 
+const SelectLabel = styled.label`
+  width: 25%;
+  height: 100%;
+  display: flex;
+  justify-Content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 8px 0 0 8px;
+  background-color: #1ABC9C;
+  color: white;
+`
+
 const SelectBtn = styled.select`
-  width: 50%;
-  height: 34px;
+  width: 75%;
+  height: 100%;
   border: 2px solid #1ABC9C;
-  border-radius: 8px;
-  margin-left: 10px;
+  border-radius: 0 8px 8px 0;
   padding: 5px;
   box-sizing: border-box;
   outline: none;
@@ -178,13 +188,16 @@ const Topic = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #1ABC9C;
+    border-radius: 8px 0 0 8px;
+    color: white;
   }
   input {
     width: 75%;
     height: 100%;
     box-sizing: border-box;
     border: 2px solid #1ABC9C;
-    border-radius: 8px;
+    border-radius: 0 8px 8px 0;
     padding: 4px 20px;
     outline: none;
   }
@@ -199,7 +212,7 @@ const Desc = styled.div`
   textarea {
     width: 100%;
     height: 200px;
-    margin: 20px auto;
+    margin: 0 auto 20px;
     box-sizing: border-box;
     border: 2px solid #1ABC9C;
     border-radius: 8px;
@@ -212,11 +225,11 @@ const BtnWrap = styled.div`
   width: 100%;
   height: 40px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   margin: 10px 0 50px;
   button {
-    width: 40%;
+    width: 48%;
     height: 100%;
     background-color: transparent;
     border: 2px solid #1ABC9C;
@@ -224,6 +237,7 @@ const BtnWrap = styled.div`
     border-radius: 8px;
     outline: none;
     cursor: pointer;
+    transition: 0.5s;
   }
   button:first-child {
     border: 2px solid gray;
