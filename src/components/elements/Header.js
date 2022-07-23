@@ -19,6 +19,7 @@ const HeaderWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 3px 6px #0C7586;
 `
 
 const Title = styled.h1`
@@ -30,8 +31,7 @@ const Title = styled.h1`
     2px 0 2px #2F4858,
     4px 0 5px #0C7586,
     6px 0 8px #2F4858;
-    
-    
+  font-family: 'Russo One', sans-serif;
 `
 
 const LogoutBtn = styled.button`
