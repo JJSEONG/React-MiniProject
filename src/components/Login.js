@@ -61,7 +61,7 @@ const LoginWrap = styled.div`
 const Title = styled.h1`
   margin: 0;
   color: #edfdf8;
-  font-size: 38px;
+  font-size: 45px;
   font-style: italic;
   text-shadow: 2px 0 2px #2f4858, 4px 0 5px #0c7586, 6px 0 8px #2f4858;
   font-family: "Russo One", sans-serif;
@@ -70,8 +70,8 @@ const Title = styled.h1`
 const WriteBox = styled.div``;
 
 const Id = styled.input`
-  height: 30px;
-  width: 60%;
+  height: 35px;
+  width: 55%;
   margin-bottom: 15px;
   padding: 5px 5px;
   border-radius: 5px;
@@ -107,8 +107,8 @@ const Text = styled.h3`
 `;
 
 const Back = styled.button`
-  width: 62%;
-  height: 36px;
+  width: 57%;
+  height: 38px;
   border: 2px solid lightslategray;
   margin-top: 5px;
   background-color: white;
