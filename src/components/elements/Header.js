@@ -1,11 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
+
+  const navigate = useNavigate();
+
   return (
     <HeaderWrap>
-      <Title>Selecthing</Title>
-      <LogoutBtn>LOGOUT</LogoutBtn>
+      <Title onClick = {() => {
+        navigate("/")
+      }}>Selecthing</Title>
+      <LogoutBtn onClick = {() => {
+        window.alert("로그아웃 하셨습니다. 로그인 화면으로 돌아갑니다.")
+        navigate("/login")
+      }}>LOGOUT</LogoutBtn>
     </HeaderWrap>
   )
 }
@@ -32,14 +41,15 @@ const Title = styled.h1`
     4px 0 5px #0C7586,
     6px 0 8px #2F4858;
   font-family: 'Russo One', sans-serif;
+  cursor: pointer;
 `
 
 const LogoutBtn = styled.button`
   position: absolute;
-  top: calc(50% - 17px);
+  top: calc(50% - 20px);
   right: 100px;
   width: 100px;
-  height: 34px;
+  height: 40px;
   border: 2px solid white;
   background-color: #1ABC9C;
   color: white;

@@ -29,10 +29,14 @@ const Post = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 0.6s;
+  transition: 0.7s;
   cursor: pointer;
+  margin: 30px auto;
   &:hover {
-    box-shadow: 0 0 7px #0C7586;
+    box-shadow: 0 0 14px #0C7586;
+  }
+  &:hover h2 {
+    font-size: 25px;
   }
 `
 
@@ -69,7 +73,6 @@ const ConWrap = styled.div`
   h2 {
     margin: 0;
     border-radius: 10px;
-    padding: 8px;
     color: white;
     text-shadow:
       0px 0 4px #0C7586,

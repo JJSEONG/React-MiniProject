@@ -2,16 +2,22 @@ import React from 'react'
 import styled from 'styled-components'
 import Header from './elements/Header'
 import Posts from './elements/Posts'
+import { useNavigate } from 'react-router-dom'
 
 const Main = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <Header />
       <MainWrap>
         <Banner></Banner>
         <Posts></Posts>
+        <Posts></Posts>
+        <Posts></Posts>
       </MainWrap>
-      <AddBtn></AddBtn>
+      <AddBtn onClick = {() => {
+        navigate('/newBoards')
+      }}></AddBtn>
     </div>
   )
 }
@@ -43,7 +49,7 @@ const AddBtn = styled.div`
   height: 60px;
   background-color: #1ABC9C;
   border-radius: 50%;
-  transition: 0.6s;
+  transition: 0.8s;
   cursor: pointer;
   &:before {
     position: absolute;
@@ -65,6 +71,7 @@ const AddBtn = styled.div`
   }
   &:hover {
     transform: rotate(180deg);
+    box-shadow: 0 0 10px #0C7586;
   }
 `
 
