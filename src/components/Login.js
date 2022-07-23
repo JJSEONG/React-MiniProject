@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import {useNavigate}  from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -12,10 +11,26 @@ const Login = () => {
         {/* <Box> */}
         <LoginWrap>
           <Title>Selecthing</Title>
-          <br /> <Id type="text" placeholder="ID를 입력해주세요" /> <br />
-          <Id type="password" placeholder="PW를 입력해주세요" /> <br />
-          <Text>아직 회원이 아니신가요?</Text> <Text onClick={() => {navigate("/Login/Signup");}}>회원가입</Text>
-          <br/><button>로그인</button>
+          <br/>
+          <WriteBox>
+            <Id type="text" placeholder="ID를 입력해주세요" />
+          </WriteBox>
+          <WriteBox>
+            <Id type="password" placeholder="PW를 입력해주세요" />{" "}
+          </WriteBox>
+          <WriteBox>
+            <TextOne>아직 회원이 아니신가요?</TextOne>{" "}
+            <Text
+              onClick={() => {
+                navigate("/Login/Signup");
+              }}
+            >
+              회원가입
+            </Text>
+          </WriteBox>
+          <WriteBox>
+          <Back>로그인</Back>
+          </WriteBox>
         </LoginWrap>
 
         {/* </Box> */}
@@ -29,6 +44,7 @@ const Wrap = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
+  padding-top: 10%;
 `;
 
 const LoginWrap = styled.div`
@@ -44,14 +60,14 @@ const LoginWrap = styled.div`
 
 const Title = styled.h1`
   margin: 0;
-  color: #EDFDF8;
+  color: #edfdf8;
   font-size: 38px;
   font-style: italic;
-  text-shadow:
-    2px 0 2px #2F4858,
-    4px 0 5px #0C7586,
-    6px 0 8px #2F4858;
+  text-shadow: 2px 0 2px #2f4858, 4px 0 5px #0c7586, 6px 0 8px #2f4858;
+  font-family: "Russo One", sans-serif;
 `;
+
+const WriteBox = styled.div``;
 
 const Id = styled.input`
   height: 30px;
@@ -63,15 +79,42 @@ const Id = styled.input`
   border: 1.5px solid lightslategray;
   font-size: 12px;
   font-weight: 500;
+  &:hover {
+    box-shadow: 0 0 7px #0C7586;
+  }
+`;
+
+const TextOne = styled.h3`
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: white;
+  font-size: 15px;
+  display: inline;
+  
 `;
 
 const Text = styled.h3`
   margin-top: 0;
-  margin-bottom :10px;
+  margin-bottom: 20px;
   color: white;
   font-size: 15px;
   display: inline;
+  &:hover {
+    text-shadow: 2px 0 2px #2f4858;
+  }
+  cursor: pointer;
   /* cursor: pointer; */
+`;
+
+const Back = styled.button`
+  width: 62%;
+  height: 36px;
+  border: 2px solid lightslategray;
+  margin-top: 5px;
+  background-color: white;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
 `;
 
 export default Login;
