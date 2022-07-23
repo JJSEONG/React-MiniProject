@@ -12,6 +12,7 @@ const Detail = () => {
   return (
     <div>
         <Header/>
+        <Delete>삭제</Delete>
         <DetailWrap>
             <Title>주제 제목</Title>
             <WriteInfo>작성자 : NICKNAME ( MBTI : CUTE ) 작성일 :22.07.24</WriteInfo>
@@ -25,10 +26,19 @@ const Detail = () => {
   )
 }
 
+const Delete = styled.div`
+  width: 20%;
+  height:15px;
+  margin: 120px auto;
+  border : 1.5px solid lightslategray;
+  background-color: whitesmoke;
+`;
+
+
 const DetailWrap = styled.div`
   width: 50%;
   height: 100vh;
-  margin: 80px auto;
+  margin: 120px auto;
   border : 1.5px solid lightslategray;
   background-color: whitesmoke;
 `;
