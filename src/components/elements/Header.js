@@ -15,7 +15,7 @@ const HeaderWrap = styled.div`
   top: 0;
   width: 100%;
   height: 80px;
-  background-color: rgb(26, 188, 156);
+  background-color: #1ABC9C;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +23,15 @@ const HeaderWrap = styled.div`
 
 const Title = styled.h1`
   margin: 0;
-  color: white;
+  color: #EDFDF8;
+  font-size: 38px;
+  font-style: italic;
+  text-shadow:
+    2px 0 2px #2F4858,
+    4px 0 5px #0C7586,
+    6px 0 8px #2F4858;
+    
+    
 `
 
 const LogoutBtn = styled.button`
@@ -33,7 +41,7 @@ const LogoutBtn = styled.button`
   width: 100px;
   height: 34px;
   border: 2px solid white;
-  background-color: rgb(26, 188, 156);
+  background-color: #1ABC9C;
   color: white;
   border-radius: 10px;
   outline: none;
@@ -41,8 +49,8 @@ const LogoutBtn = styled.button`
   transition: .3s;
   &:hover {
     background-color: white;
-    color: rgb(26, 188, 156);
-    box-shadow: 0 0 20px rgb(16, 108, 90);
+    color: #1ABC9C;
+    box-shadow: 0 0 20px #0C7586;
   }
 `
 
