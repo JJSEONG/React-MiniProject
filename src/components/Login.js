@@ -61,7 +61,7 @@ const LoginWrap = styled.div`
 const Title = styled.h1`
   margin: 0;
   color: #edfdf8;
-  font-size: 45px;
+  font-size: 42px;
   font-style: italic;
   text-shadow: 2px 0 2px #2f4858, 4px 0 5px #0c7586, 6px 0 8px #2f4858;
   font-family: "Russo One", sans-serif;
@@ -70,18 +70,20 @@ const Title = styled.h1`
 const WriteBox = styled.div``;
 
 const Id = styled.input`
-  height: 35px;
-  width: 55%;
+  height: 45px;
+  width: 40%;
   margin-bottom: 15px;
-  padding: 5px 5px;
+  padding: 5px 20px ;
   border-radius: 5px;
   border-bottom: 2px solid rgb(219, 232, 216);
   border: 1.5px solid lightslategray;
   font-size: 12px;
   font-weight: 500;
+  box-sizing: border-box;
   &:hover {
     box-shadow: 0 0 7px #0C7586;
   }
+  
 `;
 
 const TextOne = styled.h3`
@@ -107,13 +109,14 @@ const Text = styled.h3`
 `;
 
 const Back = styled.button`
-  width: 57%;
+  width: 40%;
   height: 38px;
   border: 2px solid lightslategray;
   margin-top: 5px;
   background-color: white;
   border-radius: 5px;
   outline: none;
+  box-sizing: border-box;
   cursor: pointer;
 `;
 
