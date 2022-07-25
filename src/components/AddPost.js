@@ -70,7 +70,7 @@ const AddPost = () => {
 }
 
 const MainWrap = styled.div`
-  width: 30%;
+  width: 35%;
   height: 100%;
   margin: 0 auto;
 `
