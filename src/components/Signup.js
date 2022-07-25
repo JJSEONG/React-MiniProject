@@ -132,6 +132,7 @@ const Wrap = styled.div`
   height: 100vh;
   display: flex;
   padding-top: 10%;
+  box-sizing: border-box;
 `;
 
 const LoginWrap = styled.div`

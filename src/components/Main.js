@@ -9,7 +9,7 @@ const Main = () => {
   const navigate = useNavigate();
 
   const data = useSelector((state) => state.selecthing)
-  // console.log(data)
+  console.log(data)
 
   return (
     <div>
