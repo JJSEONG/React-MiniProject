@@ -3,17 +3,26 @@ import styled from 'styled-components'
 import Header from './elements/Header'
 import Posts from './elements/Posts'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const Main = () => {
   const navigate = useNavigate();
+
+  const data = useSelector((state) => state.selecthing)
+  // console.log(data)
+
   return (
     <div>
       <Header />
       <MainWrap>
         <Banner></Banner>
-        <Posts></Posts>
-        <Posts></Posts>
-        <Posts></Posts>
+        {
+          data.post.map((v, idx) => {
+            return (
+              <Posts data = { v } key = { idx } />
+            )
+          })
+        }
       </MainWrap>
       <AddBtn onClick = {() => {
         navigate('/newBoards')
@@ -26,6 +35,9 @@ const MainWrap = styled.div`
   width: 50%;
   height: 100%;
   margin: 0 auto;
+  @media (max-width: 1024px) {
+    width: 70%;
+  }
 `
 
 const Banner = styled.div`
@@ -39,6 +51,11 @@ const Banner = styled.div`
   background-size: cover;
   margin: 140px auto 30px;
   box-sizing: border-box;
+  /* 1024보다 작으면 ! */
+  /* Desktop 1028 ~ 1440 / tablet 768 ~ 1027 / mobile 320 ~ 767 */
+  @media (max-width: 1024px) {
+    height: 300px;
+  }
 `
 
 const AddBtn = styled.div`
@@ -72,6 +89,30 @@ const AddBtn = styled.div`
   &:hover {
     transform: rotate(180deg);
     box-shadow: 0 0 10px #0C7586;
+  }
+  @media (max-width: 768px) {
+    width: 30px;
+    height: 30px;
+    right: 20px;
+    bottom: 40px;
+    &:before {
+    position: absolute;
+    top: calc(50% - 2px);
+    left: calc(50% - 7px);
+    content: '';
+    width: 14px;
+    height: 4px;
+    background-color: white;
+  }
+  &:after {
+    position: absolute;
+    top: calc(50% - 7px);
+    left: calc(50% - 2px);
+    content: '';
+    width: 4px;
+    height: 14px;
+    background-color: white;
+  }
   }
 `
 
