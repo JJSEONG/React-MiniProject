@@ -5,9 +5,6 @@ import { useSelector } from "react-redux";
 
 const Login = (props) => {
   const navigate = useNavigate();
- 
-
-
 
   return (
     <div>

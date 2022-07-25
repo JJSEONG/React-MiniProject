@@ -11,13 +11,11 @@ const Detail = () => {
 
   const post_detail = useSelector((state) => state.selecthing.post)
   // console.log(post_detail)
-  const comment = useSelector((state) => state.selecthing.comment)
-  console.log(comment)
 
   const include = post_detail.find((post) => {
     if(post.nickname === params.nickname) return post
   })
-  // console.log(include);
+  console.log(include);
 
   const navigate = useNavigate();
 
@@ -28,6 +26,54 @@ const Detail = () => {
   // console.log(selected);
 
   const com_ref = React.useRef(null);
+
+  const [ agreecount, setAgreecount ] = React.useState(include.agreeCount)
+  const [ agree, setAgree ] = React.useState(include.agree)
+
+  const [ disagreecount, setDisagreecount ] = React.useState(include.disagreeCount)
+  const [ disagree, setDisagree ] = React.useState(include.disagree)
+  
+  const agree_btn = () => {
+    if(disagree === "true") {
+      window.alert(
+        "이미 반대를 클릭하셨습니다.\n반대 클릭 해제 후 다시 시도해주세요."
+        )
+      return;
+    }
+    if(agree === "false") {
+      setAgreecount(agreecount + 1)
+      setAgree("true")
+      setDisagree("false")
+
+      window.alert("[찬성] 역시 그럴줄 알았어요 !")
+    } else {
+      setAgreecount(agreecount - 1)
+      setAgree("false")
+      setDisagree("false")
+
+      window.alert("[찬성 취소] 마음이 바뀌셨나요 ?")
+    }
+  }
+
+  const disagree_btn = () => {
+    if(agree === "true") {
+      window.alert("이미 찬성을 클릭하셨습니다.\n찬성 클릭 해제 후 다시 시도해주세요.")
+      return;
+    }
+    if(disagree === "false") {
+      setDisagreecount(disagreecount + 1)
+      setDisagree("true")
+      setAgree("false")
+
+      window.alert("[반대] 내가 정녕 싫으시오 ?")
+    } else {
+      setDisagreecount(disagreecount - 1)
+      setDisagree("false")
+      setAgree("false")
+
+      window.alert("[반대 취소] 역시 그럴줄 알았소 !  ")
+    }
+  }
 
   return (
     <div>
@@ -48,19 +94,15 @@ const Detail = () => {
         </Desc>
 
         <BtnWrap>
-          <AgreeButton onClick={() => {
-            window.alert("[찬성] 역시 그럴줄 알았어요 !")
-          }}>찬성
+          <AgreeButton onClick={agree_btn}>
             <p style={{fontSize: "17px"}} >
-              { include.agreeCount } 표
+              찬성 { agreecount } 표
             </p>
           </AgreeButton>
           
-          <OppositionButton onClick={() => {
-            window.alert("[반대] 정녕 내가 싫으시오 ?")
-          }}>반대
+          <OppositionButton onClick={disagree_btn}>
             <p style={{fontSize: "17px"}}>
-              { include.disagreeCount } 표
+              반대 { disagreecount } 표
             </p>
           </OppositionButton>
           
@@ -88,22 +130,20 @@ const Detail = () => {
                 <option value="ENFJ">ENFJ </option>
                 <option value="ENTJ">ENTJ </option>
               </SelectBtn>
-            <ReplyInputBox type="text" placeholder='댓글을 입력하세요.' ref = { com_ref } />
-            <ReplyBtn>작성</ReplyBtn>
-
+              <ReplyInputBox type="text" placeholder='댓글을 입력하세요.' ref = { com_ref } />
+              <ReplyBtn>작성</ReplyBtn>
             </ReplyWriteBox>
             <ReplyBox>
               {
-                comment.map((v, i) => {
-                  return (
-                    <>
-                      <div>{ v.nickname }</div>
-                      <div>{ v.mbti }</div>
-                      <div>{ v.comment }</div>
-                    </>
-                  )
-                })
-              }
+                include.comment.map((v, i) => {
+                    return (  
+                      <CommentWrap key = { i }>
+                        <div><span>{ v.mbti }</span> { v.nickname }</div>
+                        <div> → { v.comment }</div>
+                      </CommentWrap>
+                    )
+                  })
+                }
             </ReplyBox>
           </DescReply>
 
@@ -132,6 +172,7 @@ const SubTitle = styled.h2`
     2px 0 2px #5D9D8B,
     6px 0 4px #5D9D8B;
   box-sizing: border-box;
+  text-align: center;
   transition: 0.6s;
 `
 
@@ -182,7 +223,7 @@ const Desc = styled.div`
 
 const DescReply = styled.div`
   width: 100%;
-  height: 150px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -249,8 +290,10 @@ const ReplyBox = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 4px 20px;
   box-sizing: border-box;
   /* border: 2px solid black; */
 `
@@ -319,6 +362,40 @@ const BackButton = styled.button`
     }
 `;
 
-
+const CommentWrap = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 6px 0;
+  font-size: 14px;
+  div:nth-of-type(1) {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  span {
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1ABC9C;
+    padding: 2px 4px;
+    border-radius: 4px;
+    color: white;
+    margin-right: 6px;
+  }
+  div:nth-of-type(2) {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 4px;
+    margin-left: 10px;
+    text-align: left;
+  }
+`
 
 export default Detail
