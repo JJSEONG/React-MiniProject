@@ -5,9 +5,6 @@ import { useSelector } from "react-redux";
 
 const Login = (props) => {
   const navigate = useNavigate();
- 
-
-
 
   return (
     <div>
@@ -20,10 +17,10 @@ const Login = (props) => {
             <Id type="text" placeholder="ID를 입력해주세요" />
           </WriteBox>
           <WriteBox>
-            <Id type="password" placeholder="PW를 입력해주세요" />{" "}
+            <Id type="password" placeholder="PW를 입력해주세요" />
           </WriteBox>
           <WriteBox>
-            <TextOne>아직 회원이 아니신가요?</TextOne>{" "}
+            <TextOne>아직 회원이 아니신가요?</TextOne>
             <Text
               onClick={() => {
                 navigate("/Login/Signup");
