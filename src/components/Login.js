@@ -45,17 +45,16 @@ const Wrap = styled.div`
   height: 100vh;
   display: flex;
   padding-top: 10%;
+  box-sizing: border-box
 `;
 
 const LoginWrap = styled.div`
   width: 60%;
   height: 60%;
   margin: auto;
-  /* border : 1.5px solid lightslategray; */
   border-radius: 3px;
   padding-top: 20px;
   padding-bottom: 5%;
-  /* background-color: whitesmoke; */
 `;
 
 const Title = styled.h1`

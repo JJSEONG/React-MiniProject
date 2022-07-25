@@ -1,46 +1,67 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import Header from './elements/Header'
 import { useParams,useNavigate } from 'react-router-dom'
-import Logo from '../깻잎논쟁.png'
+import { useSelector } from 'react-redux'
 
 const Detail = () => {
 
   const params = useParams();
+  // console.log(params.nickname)
 
-  console.log(params.title)
+  const post_detail = useSelector((state) => state.selecthing.post)
+  // console.log(post_detail)
+  const comment = useSelector((state) => state.selecthing.comment)
+  console.log(comment)
+
+  const include = post_detail.find((post) => {
+    if(post.nickname === params.nickname) return post
+  })
+  // console.log(include);
 
   const navigate = useNavigate();
+
+  const [selected, setSelected] = React.useState("");
+  const handleSelect = (e) => {
+    setSelected(e.target.value);
+  };
+  // console.log(selected);
+
+  const com_ref = React.useRef(null);
 
   return (
     <div>
       <Header />
       <MainWrap>
         <SubTitle>
-          요즘 HOT한 깻잎논쟁
+          { include.title  }
         </SubTitle>
         <WriteInfo>
-          <div>작성일: 22.07.22</div>
-          <div>작성자: NICKNAME(MBTI: CUTE)</div>
+          <div>작성일: { include.date }</div>
+          <div>작성자: { include.nickname } (MBTI: { include.mbti })</div>
         </WriteInfo>
         <PreView>
-          <img src={Logo} alt="" />
+          <img src={ include.images } alt="" />
         </PreView>
         <Desc>
-          <div>내 절친의 깻잎을 떼어주는 나의 애인, 어떻게 생각하시나요?</div>
+          <div>{ include.contents }</div>
         </Desc>
 
         <BtnWrap>
           <AgreeButton onClick={() => {
             window.alert("[찬성] 역시 그럴줄 알았어요 !")
           }}>찬성
-            <p style={{fontSize: "17px"}} >0</p>
+            <p style={{fontSize: "17px"}} >
+              { include.agreeCount } 표
+            </p>
           </AgreeButton>
           
           <OppositionButton onClick={() => {
             window.alert("[반대] 정녕 내가 싫으시오 ?")
           }}>반대
-            <p style={{fontSize: "17px"}}>2</p>
+            <p style={{fontSize: "17px"}}>
+              { include.disagreeCount } 표
+            </p>
           </OppositionButton>
           
         </BtnWrap>
@@ -48,7 +69,7 @@ const Detail = () => {
         <DescReply>
             <ReplyWriteBox>
               {/* <div>댓글</div> */}
-              <SelectBtn defaultValue="default" id="mbti" name="mbti">
+              <SelectBtn defaultValue="default" id="mbti" name="mbti" onChange={handleSelect}>
                 <option value="default" disabled>MBTI</option>
                 <option value="ISTJ">ISTJ </option>
                 <option value="ISFJ">ISFJ</option>
@@ -67,11 +88,23 @@ const Detail = () => {
                 <option value="ENFJ">ENFJ </option>
                 <option value="ENTJ">ENTJ </option>
               </SelectBtn>
-            <ReplyInputBox type="text" placeholder='댓글을 입력하세요.'></ReplyInputBox>
+            <ReplyInputBox type="text" placeholder='댓글을 입력하세요.' ref = { com_ref } />
             <ReplyBtn>작성</ReplyBtn>
 
             </ReplyWriteBox>
-            <ReplyBox><div>닉네임, 댓글</div></ReplyBox>
+            <ReplyBox>
+              {
+                comment.map((v, i) => {
+                  return (
+                    <>
+                      <div>{ v.nickname }</div>
+                      <div>{ v.mbti }</div>
+                      <div>{ v.comment }</div>
+                    </>
+                  )
+                })
+              }
+            </ReplyBox>
           </DescReply>
 
         
