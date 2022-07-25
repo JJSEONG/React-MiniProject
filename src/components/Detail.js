@@ -16,27 +16,51 @@ const Detail = () => {
       <Header />
       <MainWrap>
         <SubTitle><h2>요즘 HOT한 깻잎논쟁</h2></SubTitle>
-        <WriteInfo>작성자 : NICKNAME ( MBTI : CUTE ) 작성일 :22.07.22</WriteInfo>
+        <WriteInfo>작성자: <div> NICKNAME</div> (MBTI: <div>CUTE</div>) 작성일:<div>22.07.22</div></WriteInfo>
         <PreView></PreView>
         <Desc>
-            <div>주제 내용</div>
+            <div>내 절친의 깻잎을 떼어주는 나의 애인, 어떻게 생각하시나요?</div>
           </Desc>
 
         <BtnWrap>
           <AgreeButton>찬성
-            <p>0</p></AgreeButton>
+            <p style={{fontSize: "17px"}} >0</p></AgreeButton>
           
-          <OppositionButton >반대<p>2</p></OppositionButton>
+          <OppositionButton >반대<p style={{fontSize: "17px"}}>2</p></OppositionButton>
           
         </BtnWrap>
 
-        <Desc>
-            <div>댓글창!!!</div>
-          </Desc>
+        <DescReply>
+            <ReplyWriteBox>
+              <div>댓글</div>
+              <SelectBtn defaultValue="default" id="mbti" name="mbti">
+              <option value="default" disabled>MBTI</option>
+              <option value="ISTJ">ISTJ </option>
+              <option value="ISFJ">ISFJ</option>
+              <option value="INFJ">INFJ </option>
+              <option value="INTJ">INTJ </option>
+              <option value="ISTP">ISTP </option>
+              <option value="ISFP">ISFP</option>
+              <option value="INFP">INFP </option>
+              <option value="INTP">INTP </option>
+              <option value="ESTP">ESTP</option>
+              <option value="ESFP">ESFP </option>
+              <option value="ENFP">ENFP </option>
+              <option value="ENTP">ENTP </option>
+              <option value="ESTJ">ESTJ</option>
+              <option value="ESFJ">ESFJ </option>
+              <option value="ENFJ">ENFJ </option>
+              <option value="ENTJ">ENTJ </option>
+            </SelectBtn>
+            <ReplyInputBox></ReplyInputBox>
+            <ReplyBtn>작성</ReplyBtn>
+
+            </ReplyWriteBox>
+            <ReplyBox><div>닉네임, 댓글</div></ReplyBox>
+          </DescReply>
 
         
           <BackButton type="submit" onClick={() => {
-            window.alert("게시글 작성에 성공하셨습니다.")
             navigate("/")
           }}>뒤로가기</BackButton>
         
@@ -52,7 +76,7 @@ const MainWrap = styled.div`
 `
 
 const SubTitle = styled.div`
-  margin: 120px auto 30px;
+  margin: 100px auto 30px;
   font-family: 'Russo One',sans-serif;
   font-size: 28px;
   /* font-style: italic; */
@@ -76,7 +100,12 @@ const SubTitle = styled.div`
 const WriteInfo =styled.h3`
   font-size: 10px;
   text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  /* float: right; */
 `;
+
 
 const PreView = styled.div`
   width: 100%;
@@ -86,32 +115,98 @@ const PreView = styled.div`
   border: 5px solid #1ABC9C;
   box-sizing: border-box;
 `
-
 const Desc = styled.div`
   width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto 25px;
+  box-sizing: border-box;
+  border: 2px solid #1ABC9C;
+  border-radius: 8px;
+`
+
+const DescReply = styled.div`
+  width: 100%;
+  height: 150px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto 25px;
+  box-sizing: border-box;
+  border: 2px solid #1ABC9C;
+  border-radius: 8px;
+`
+
+const ReplyWriteBox = styled.div`
+  width: 100%;
+  height: 40px;
+  display: flex;
   justify-content: center;
   align-items: center;
-  div {
-    width: 100%;
-    height: 150px;
-    margin: 0 auto 20px;
-    box-sizing: border-box;
-    border: 2px solid #1ABC9C;
-    border-radius: 8px;
-    padding: 20px;
-    outline: none;
+  box-sizing: border-box;
+  border-bottom: 2px solid #1ABC9C;
+  
+`
+
+const SelectBtn = styled.select`
+  width: 20%;
+  height: 90%;
+  border: 1.5px solid #1ABC9C;
+  border-radius: 8px;
+  margin: auto 3px;
+  padding: 5px;
+  box-sizing: border-box;
+  outline: none;
+  text-align: center;
+  option[value="default"] {
+    display: none;
   }
+`
+
+const ReplyInputBox = styled.input`
+    width:50%;
+    height: 80%;
+    /* background-color: #1ABC9C; */
+    color: white;
+    border-bottom: 1.5px solid #1ABC9C;
+    border-top :none;
+    border-right :none;
+    border-left :none;
+    margin-left: 3px;
+`;
+
+const ReplyBtn = styled.button`
+    width:15%;
+    border-radius: 8px;
+    height: 90%;
+    background-color: #1ABC9C;
+    color: white;
+    border: 1.5px solid #1ABC9C;
+    margin:auto 1px;
+    cursor: pointer;
+`;
+
+const ReplyBox = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  /* border: 2px solid black; */
+  
 `
 
 const BtnWrap = styled.div`
   width: 100%;
-  height: 85px;
+  height: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 0 50px;
+  margin: 10px 0 10px;
   
   button {
     width: 48%;
@@ -120,6 +215,9 @@ const BtnWrap = styled.div`
     outline: none;
     cursor: pointer;
     transition: 0.5s;
+  }
+  p{
+    margin:5px auto;
   }
 `
 
@@ -152,6 +250,7 @@ const BackButton = styled.button`
     width:100%;
     border-radius: 8px;
     height: 40px;
+    margin-bottom: 50px;
     background-color: transparent;
     color: #1ABC9C;
     border: 2px solid #1ABC9C;
@@ -159,7 +258,6 @@ const BackButton = styled.button`
       background-color: #1ABC9C;
     color: white;
     border: 2px solid #1ABC9C;
-    
     }
 `;
 
