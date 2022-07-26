@@ -3,7 +3,7 @@
 // Actions
 const LOAD = "selecthing/LOAD";
 const UPDATE = "selecthing/UPDATE"
-const CREATE = "selecthing/CREATE"
+const CREATE_POST = "selecthing/CREATE_POST"
 
 const initialState = {
   post : [
@@ -111,7 +111,8 @@ export function updatePost(post, nickname) {
 }
 
 export function createPost(post) {
-  return { typpe: CREATE, post }
+  // console.log(post)
+  return { type: CREATE_POST, post }
 }
 
 // Reducer
@@ -133,9 +134,15 @@ export default function reducer(state = initialState, action = {} ) {
           return;
         }
       })
-      console.log("변경된 값 :", {...state})
-      return {...state}
-    }
+        console.log("변경된 값 :", {...state})
+        return {...state}
+      }
+
+      case "selecthing/CREATE_POST" : {
+        const new_post = [ ...state.post, action.post ]
+        console.log(new_post)
+        return { ...state, post: new_post }
+      }
 
     default: return state;
   }

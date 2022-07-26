@@ -12,16 +12,11 @@ import React from "react";
 
 
 function App() {
-
-  
-
-  
-
   return (
     <div className="App">
       <Routes>
         <Route path="/" element = {<Main /> } />
-        <Route path="/user/login" element ={<Login  />} />
+        <Route path="/user/login" element ={<Login />} />
         <Route path="/user/signup" element={<Signup />} />
         <Route path="/newBoards" element = {<AddPost />} />
         <Route path="/boards/:nickname/details" element={<Detail />}/>

@@ -2,8 +2,8 @@ import React from "react";
 import { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useCookies } from 'react-cookie';
+// import { useSelector } from "react-redux";
+// import { useCookies } from 'react-cookie';
 import axios from "axios";
 
 const Login = (props) => {
@@ -116,7 +116,7 @@ const Wrap = styled.div`
   height: 100vh;
   display: flex;
   padding-top: 10%;
-  box-sizing: border-box
+  box-sizing: border-box;
 `;
 
 const LoginWrap = styled.div`
@@ -162,7 +162,6 @@ const TextOne = styled.h3`
   color: white;
   font-size: 13px;
   display: inline;
-  
 `;
 
 const Text = styled.h3`
