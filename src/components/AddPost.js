@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Header from './elements/Header'
+import Logo from '../깻잎논쟁.png'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -8,18 +9,37 @@ const AddPost = () => {
   
   const navigate = useNavigate();
 
+  const temp_img = "https://iconbjjbelfast.com/wp-content/uploads/2017/04/default-image.jpg"
+  const [ files, setFiles ] = React.useState(temp_img);
+  const [ filestxt, setFilesTxt ] = React.useState("");
+
+  const saveFileImage = (e) => {
+    const file = e.target.files
+    console.log(file)
+
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]); // 내가 올릴 img
+    reader.onload = () => {
+      setFiles(reader.result);
+      setFilesTxt(file[0].name)
+    };
+
+  }
+
   return (
     <div>
       <Header />
       <MainWrap>
         <SubTitle>UPLOAD</SubTitle>
-        <PreView></PreView>
+        <PreView>
+          <img src={files} alt="" />
+        </PreView>
         <Filewrap>
-          <FileInput type="text" placeholder="사진을 등록해주세요." readOnly /> 
+          <FileInput type="text" placeholder="사진을 등록해주세요." value = { filestxt } readOnly /> 
           <FileBtn>
             <Label htmlFor="file">파일 찾기</Label>
           </FileBtn>
-          <input type="file" id="file" style={{display: "none"}} />
+          <input type="file" id="file" onChange={saveFileImage} style={{display: "none"}} />
         </Filewrap>
         <MbtiWrap>
           <form style={{ display:"flex", justifyContent:"space-between", alignItems:"center", width: "100%", height: "34px", margin: "0 auto" }}>
@@ -93,6 +113,13 @@ const PreView = styled.div`
   border-radius: 8px;
   border: 5px solid #1ABC9C;
   box-sizing: border-box;
+  overflow: hidden;
+  background-color: #c3c3c3;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `
 const Filewrap = styled.div`
   width: 100%;
