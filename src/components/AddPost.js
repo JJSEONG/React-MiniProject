@@ -30,7 +30,6 @@ const AddPost = () => {
 
     file_link_ref.current = { url: file_url };
 
-
     const file = e.target.files
     console.log(file)
 

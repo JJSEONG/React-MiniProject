@@ -8,56 +8,42 @@ import axios from "axios";
 
 const Login = (props) => {
 
-
-    let [loginId, setLoginId] = useState("");
-    let [loginPassword, setLoginPassword] = useState("");
-    let [savedLoginId, setSavedLoginId] = useState("");
-    let [savedLoginPassword, setSavedLoginPassword] = useState("");
-    let [tokenId, setTokenId] = useState("");
-    let [savedTokenId, setSavedTokenId] = useState("");
-
-
-    let sessionStorage = window.sessionStorage;
+  let sessionStorage = window.sessionStorage;
 
   const username = React.useRef(null);
   const password = React.useRef(null);
 
-  const axiosLogin=async() =>{
-    const res = await axios.post("http://lightromance.shop/user/login",{
-      username : username.current.value,
-      password : password.current.value
-      
-    });
-    console.log(res);
-    console.log(res.data);
-    window.alert(res.data.answer);
+  const axiosLogin = async () =>{
+    try {
+      const res = await axios.post("http://lightromance.shop/user/login",{
+        username : username.current.value,
+        password : password.current.value
+      })
+      if(res.status === 200 && res.data) {
+        sessionStorage.setItem("token", res.data);
+      }
+      console.log(res);
+      console.log(res.data);
+      window.alert(res.data.answer);
+    } catch(error) {
+      console.log(error)
+    }
   }
 
-  
-
   const navigate = useNavigate(); 
-  
-  // onChange={ (e)=>{
-  //   setLoginId(e.res.data) }}
-
 
   return (
     
     <div>
       <Wrap>
-        {/* <Box> */}
         <LoginWrap>
           <Title>Selecthing</Title>
           <br/>
           <WriteBox>
-            <Id type="text" placeholder="ID를 입력해주세요" ref={username} onChange={ (e)=>{
-                    setLoginId(e.target.value) }} />
+            <Id type="text" placeholder="ID를 입력해주세요" ref={username} />
           </WriteBox>
           <WriteBox>
-            <Id type="password" placeholder="PW를 입력해주세요" ref={password} onChange={ (e)=>{
-                    setLoginPassword(e.target.value)
-                } }/>
-                
+            <Id type="password" placeholder="PW를 입력해주세요" ref={password} />
           </WriteBox>
           <WriteBox>
             <TextOne>아직 회원이 아니신가요?</TextOne>
@@ -71,41 +57,12 @@ const Login = (props) => {
           </WriteBox>
           <WriteBox>
           
-          
-          <Back  onClick={ ()=>{ 
-                    sessionStorage.setItem("loginId", loginId);
-                    sessionStorage.setItem("loginPassword", loginPassword);
-                    sessionStorage.setItem("tokenId", tokenId);
-
-                    setSavedLoginId(sessionStorage.getItem("loginId"));
-                    setSavedLoginPassword(sessionStorage.getItem("loginPassword"));
-                    setSavedTokenId(sessionStorage.getItem("tokenId"));
-
-                    axiosLogin();
-                } }>로그인</Back>
-          <button onClick={ ()=>{
-                    sessionStorage.removeItem("loginId");
-                    sessionStorage.removeItem("loginPassword");
-                    sessionStorage.removeItem("tokenId");
-                    setSavedLoginId(sessionStorage.getItem("loginId"));
-                } }>로그아웃</button>
-          {/* <p>{props.text}</p> */}
-
-          <div>
-                sessionStorage에 저장된 loginId는 {savedLoginId} 이고 loginPassword는 {savedLoginPassword} tokenId는 {savedTokenId} 이다. 
-            </div>
-            <div>
-                { JSON.stringify(sessionStorage) }
-            </div>
-          
-
+          <Back  onClick={ ()=>{axiosLogin();}}>로그인</Back>
+          <button onClick={ ()=>{sessionStorage.removeItem("token"); }}>로그아웃</button>
           </WriteBox>
         </LoginWrap>
-
-        {/* </Box> */}
       </Wrap>
     </div>
-    
   );
   
 };
