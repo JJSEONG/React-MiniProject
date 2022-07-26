@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 // import { useSelector } from "react-redux";
@@ -7,43 +7,45 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Login = (props) => {
-
   let sessionStorage = window.sessionStorage;
 
   const username = React.useRef(null);
   const password = React.useRef(null);
 
-  const axiosLogin = async () =>{
+  const axiosLogin = async () => {
     try {
-      const res = await axios.post("http://lightromance.shop/user/login",{
-        username : username.current.value,
-        password : password.current.value
-      })
-      if(res.status === 200 && res.data) {
+      const res = await axios.post("http://lightromance.shop/user/login", {
+        username: username.current.value,
+        password: password.current.value,
+      });
+      if (res.status === 200 && res.data) {
         sessionStorage.setItem("token", res.data);
       }
       console.log(res);
       console.log(res.data);
       window.alert(res.data.answer);
-    } catch(error) {
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   return (
-    
     <div>
       <Wrap>
         <LoginWrap>
           <Title>Selecthing</Title>
-          <br/>
+          <br />
           <WriteBox>
             <Id type="text" placeholder="ID를 입력해주세요" ref={username} />
           </WriteBox>
           <WriteBox>
-            <Id type="password" placeholder="PW를 입력해주세요" ref={password} />
+            <Id
+              type="password"
+              placeholder="PW를 입력해주세요"
+              ref={password}
+            />
           </WriteBox>
           <WriteBox>
             <TextOne>아직 회원이 아니신가요?</TextOne>
@@ -56,15 +58,25 @@ const Login = (props) => {
             </Text>
           </WriteBox>
           <WriteBox>
-          
-          <Back  onClick={ ()=>{axiosLogin();}}>로그인</Back>
-          <button onClick={ ()=>{sessionStorage.removeItem("token"); }}>로그아웃</button>
+            <Back
+              onClick={() => {
+                axiosLogin();
+              }}
+            >
+              로그인
+            </Back>
+            <button
+              onClick={() => {
+                sessionStorage.removeItem("token");
+              }}
+            >
+              로그아웃
+            </button>
           </WriteBox>
         </LoginWrap>
       </Wrap>
     </div>
   );
-  
 };
 
 const Wrap = styled.div`
@@ -100,7 +112,7 @@ const Id = styled.input`
   height: 45px;
   width: 40%;
   margin-bottom: 15px;
-  padding: 5px 20px ;
+  padding: 5px 20px;
   border-radius: 5px;
   border-bottom: 2px solid rgb(219, 232, 216);
   border: 1.5px solid lightslategray;
@@ -108,9 +120,8 @@ const Id = styled.input`
   font-weight: 500;
   box-sizing: border-box;
   &:hover {
-    box-shadow: 0 0 7px #0C7586;
+    box-shadow: 0 0 7px #0c7586;
   }
-  
 `;
 
 const TextOne = styled.h3`

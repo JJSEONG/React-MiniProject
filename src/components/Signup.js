@@ -16,7 +16,7 @@ const Signup = (props) => {
     });
     console.log(res);
 
-    window.alert(res.data.answer);
+    window.alert(res.data);
   }
 
   const axiosNicknameCheck=async() =>{
