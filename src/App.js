@@ -7,6 +7,10 @@ import Signup from './components/Signup';
 import AddPost from './components/AddPost';
 import Detail from './components/Detail';
 
+import React from "react";
+
+
+
 function App() {
   return (
     <div className="App">

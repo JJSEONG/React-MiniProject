@@ -1,12 +1,48 @@
 import React from "react";
+import { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
+// import { useCookies } from 'react-cookie';
+import axios from "axios";
 
 const Login = (props) => {
-  const navigate = useNavigate();
+
+
+    let [loginId, setLoginId] = useState("");
+    let [loginPassword, setLoginPassword] = useState("");
+    let [savedLoginId, setSavedLoginId] = useState("");
+    let [savedLoginPassword, setSavedLoginPassword] = useState("");
+    let [tokenId, setTokenId] = useState("");
+    let [savedTokenId, setSavedTokenId] = useState("");
+
+
+    let sessionStorage = window.sessionStorage;
+
+  const username = React.useRef(null);
+  const password = React.useRef(null);
+
+  const axiosLogin=async() =>{
+    const res = await axios.post("http://lightromance.shop/user/login",{
+      username : username.current.value,
+      password : password.current.value
+      
+    });
+    console.log(res);
+    console.log(res.data);
+    window.alert(res.data.answer);
+  }
+
+  
+
+  const navigate = useNavigate(); 
+  
+  // onChange={ (e)=>{
+  //   setLoginId(e.res.data) }}
+
 
   return (
+    
     <div>
       <Wrap>
         {/* <Box> */}
@@ -14,10 +50,14 @@ const Login = (props) => {
           <Title>Selecthing</Title>
           <br/>
           <WriteBox>
-            <Id type="text" placeholder="ID를 입력해주세요" />
+            <Id type="text" placeholder="ID를 입력해주세요" ref={username} onChange={ (e)=>{
+                    setLoginId(e.target.value) }} />
           </WriteBox>
           <WriteBox>
-            <Id type="password" placeholder="PW를 입력해주세요" />
+            <Id type="password" placeholder="PW를 입력해주세요" ref={password} onChange={ (e)=>{
+                    setLoginPassword(e.target.value)
+                } }/>
+                
           </WriteBox>
           <WriteBox>
             <TextOne>아직 회원이 아니신가요?</TextOne>
@@ -30,14 +70,44 @@ const Login = (props) => {
             </Text>
           </WriteBox>
           <WriteBox>
-          <Back>로그인</Back>
+          
+          
+          <Back  onClick={ ()=>{ 
+                    sessionStorage.setItem("loginId", loginId);
+                    sessionStorage.setItem("loginPassword", loginPassword);
+                    sessionStorage.setItem("tokenId", tokenId);
+
+                    setSavedLoginId(sessionStorage.getItem("loginId"));
+                    setSavedLoginPassword(sessionStorage.getItem("loginPassword"));
+                    setSavedTokenId(sessionStorage.getItem("tokenId"));
+
+                    axiosLogin();
+                } }>로그인</Back>
+          <button onClick={ ()=>{
+                    sessionStorage.removeItem("loginId");
+                    sessionStorage.removeItem("loginPassword");
+                    sessionStorage.removeItem("tokenId");
+                    setSavedLoginId(sessionStorage.getItem("loginId"));
+                } }>로그아웃</button>
+          {/* <p>{props.text}</p> */}
+
+          <div>
+                sessionStorage에 저장된 loginId는 {savedLoginId} 이고 loginPassword는 {savedLoginPassword} tokenId는 {savedTokenId} 이다. 
+            </div>
+            <div>
+                { JSON.stringify(sessionStorage) }
+            </div>
+          
+
           </WriteBox>
         </LoginWrap>
 
         {/* </Box> */}
       </Wrap>
     </div>
+    
   );
+  
 };
 
 const Wrap = styled.div`
