@@ -3,11 +3,14 @@ import styled from 'styled-components'
 import Header from './elements/Header'
 import { useParams,useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { updatePost } from '../redux/modules/selecthing'
+import { useDispatch } from 'react-redux'
 
 const Detail = () => {
 
   const params = useParams();
   // console.log(params.nickname)
+  const dispatch = useDispatch();
 
   const post_detail = useSelector((state) => state.selecthing.post)
   // console.log(post_detail)
@@ -15,7 +18,7 @@ const Detail = () => {
   const include = post_detail.find((post) => {
     if(post.nickname === params.nickname) return post
   })
-  console.log(include);
+  // console.log(include);
 
   const navigate = useNavigate();
 
@@ -27,53 +30,94 @@ const Detail = () => {
 
   const com_ref = React.useRef(null);
 
-  const [ agreecount, setAgreecount ] = React.useState(include.agreeCount)
-  const [ agree, setAgree ] = React.useState(include.agree)
+  const agreecount_ref = React.useRef(include.agreeCount)
+  const disagreecount_ref = React.useRef(include.disagreeCount)
+  const agree_ref = React.useRef(include.agree)
+  const disagree_ref = React.useRef(include.disagree)
+  
+  const [ checked, setChecked ] = React.useState("");
 
-  const [ disagreecount, setDisagreecount ] = React.useState(include.disagreeCount)
-  const [ disagree, setDisagree ] = React.useState(include.disagree)
+  const post_agree = {
+    agreeCount: agreecount_ref.current,
+    disagreeCount: disagreecount_ref.current,
+    agree: agree_ref.current,
+    disagree: disagree_ref.current,
+  }
   
   const agree_btn = () => {
-    if(disagree === "true") {
+    if(disagree_ref.current === true) {
       window.alert(
         "이미 반대를 클릭하셨습니다.\n반대 클릭 해제 후 다시 시도해주세요."
         )
       return;
     }
-    if(agree === "false") {
-      setAgreecount(agreecount + 1)
-      setAgree("true")
-      setDisagree("false")
+    if(agree_ref.current === false) {
+      agreecount_ref.current = agreecount_ref.current + 1
+      agree_ref.current = true
+      disagree_ref.current = false
+
+      setChecked("checked")
 
       window.alert("[찬성] 역시 그럴줄 알았어요 !")
+
+      post_agree.agreeCount = agreecount_ref.current;
+      post_agree.agree = agree_ref.current;
+      post_agree.disagree = disagree_ref.current;
+
+      console.log(post_agree)
+      dispatch(updatePost(post_agree, params.nickname))
     } else {
-      setAgreecount(agreecount - 1)
-      setAgree("false")
-      setDisagree("false")
+      agreecount_ref.current = agreecount_ref.current - 1
+      agree_ref.current = false
+      disagree_ref.current = false
+
+      setChecked("un-checked")
 
       window.alert("[찬성 취소] 마음이 바뀌셨나요 ?")
+
+      post_agree.agreeCount = agreecount_ref.current;
+      post_agree.agree = agree_ref.current;
+      post_agree.disagree = disagree_ref.current;
+
+      dispatch(updatePost(post_agree, params.nickname))
     }
   }
 
   const disagree_btn = () => {
-    if(agree === "true") {
+    if(agree_ref.current === true) {
       window.alert("이미 찬성을 클릭하셨습니다.\n찬성 클릭 해제 후 다시 시도해주세요.")
       return;
     }
-    if(disagree === "false") {
-      setDisagreecount(disagreecount + 1)
-      setDisagree("true")
-      setAgree("false")
+    if(disagree_ref.current === false) {
+      disagreecount_ref.current = disagreecount_ref.current + 1
+      agree_ref.current = false
+      disagree_ref.current = true
+      setChecked("checked")
 
       window.alert("[반대] 내가 정녕 싫으시오 ?")
-    } else {
-      setDisagreecount(disagreecount - 1)
-      setDisagree("false")
-      setAgree("false")
 
-      window.alert("[반대 취소] 역시 그럴줄 알았소 !  ")
+      post_agree.disagreeCount = disagreecount_ref.current;
+      post_agree.agree = agree_ref.current;
+      post_agree.disagree = disagree_ref.current;
+
+      dispatch(updatePost(post_agree, params.nickname))
+    } else {
+      disagreecount_ref.current = disagreecount_ref.current - 1
+      agree_ref.current = false
+      disagree_ref.current = false
+      setChecked("un-checked")
+
+      window.alert("[반대 취소] 역시 그럴줄 알았소 !")
+
+      post_agree.disagreeCount = disagreecount_ref.current;
+      post_agree.agree = agree_ref.current;
+      post_agree.disagree = disagree_ref.current;
+
+      dispatch(updatePost(post_agree, params.nickname))
     }
   }
+
+  console.log("포스트어그리",post_agree)
 
   return (
     <div>
@@ -96,13 +140,13 @@ const Detail = () => {
         <BtnWrap>
           <AgreeButton onClick={agree_btn}>
             <p style={{fontSize: "17px"}} >
-              찬성 { agreecount } 표
+              찬성 { agreecount_ref.current } 표
             </p>
           </AgreeButton>
           
           <OppositionButton onClick={disagree_btn}>
             <p style={{fontSize: "17px"}}>
-              반대 { disagreecount } 표
+              반대 { disagreecount_ref.current } 표
             </p>
           </OppositionButton>
           
@@ -146,7 +190,6 @@ const Detail = () => {
                 }
             </ReplyBox>
           </DescReply>
-
         
           <BackButton type="submit" onClick={() => {
             navigate("/")

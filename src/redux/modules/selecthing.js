@@ -2,6 +2,8 @@
 
 // Actions
 const LOAD = "selecthing/LOAD";
+const UPDATE = "selecthing/UPDATE"
+const CREATE = "selecthing/CREATE"
 
 const initialState = {
   post : [
@@ -13,8 +15,8 @@ const initialState = {
       contents: "내 절친의 깻잎을 떼어주는 나의 애인, 어떻게 생각하시나요?",
       agreeCount: 4,
       disagreeCount: 8,
-      agree: "false",
-      disagree: "false",
+      agree: false,
+      disagree: false,
       date: "22.07.21",
       mbti: "ESFP",
       comment : [
@@ -43,8 +45,8 @@ const initialState = {
       contents: "내 절친의 새우를 까서 주는 나의 애인, 어떻게 생각하시나요?",
       agreeCount: 2,
       disagreeCount: 6,
-      agree: "false",
-      disagree: "false",
+      agree: false,
+      disagree: false,
       date: "22.07.23",
       mbti: "ESFJ",
       comment : [
@@ -73,8 +75,8 @@ const initialState = {
       contents: "내 절친의 패딩 지퍼를 올려주는 나의 애인, 어떻게 생각하시나요?",
       agreeCount: 1,
       disagreeCount: 2,
-      agree: "false",
-      disagree: "false",
+      agree: false,
+      disagree: false,
       date: "22.07.25",
       mbti: "ISFP",
       comment : [
@@ -103,11 +105,36 @@ export function loadPost(post) {
   return { type: LOAD, post }
 }
 
+export function updatePost(post, nickname) {
+  console.log("확인", post, nickname)
+  return { type: UPDATE, post, nickname }
+}
+
+export function createPost(post) {
+  return { typpe: CREATE, post }
+}
+
 // Reducer
 export default function reducer(state = initialState, action = {} ) {
   switch (action.type) {
     case "selecthing/LOAD": {
       return { post: action.post }
+    }
+
+    case "selecthing/UPDATE": {
+      // console.log("스테이트", ...state.post , "액션", action.post, "ID", action.nickname)
+      state.post.find((include) => {
+        if(include.nickname === action.nickname) {
+          include.agree = action.post.agree;
+          include.disagree = action.post.disagree;
+          include.agreeCount = action.post.agreeCount;
+          include.disagreeCount = action.post.disagreeCount;
+
+          return;
+        }
+      })
+      console.log("변경된 값 :", {...state})
+      return {...state}
     }
 
     default: return state;
