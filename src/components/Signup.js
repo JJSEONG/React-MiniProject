@@ -110,7 +110,7 @@ const Signup = (props) => {
             <ButtonBox>
               <Back
                 onClick={() => {
-                  navigate("/Login");
+                  navigate("/user/login");
                 }}
               >
                 뒤로가기

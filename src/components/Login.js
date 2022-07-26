@@ -23,7 +23,7 @@ const Login = (props) => {
             <TextOne>아직 회원이 아니신가요?</TextOne>
             <Text
               onClick={() => {
-                navigate("/Login/Signup");
+                navigate("/user/signup");
               }}
             >
               회원가입
@@ -46,7 +46,7 @@ const Wrap = styled.div`
   height: 100vh;
   display: flex;
   padding-top: 10%;
-  box-sizing: border-box
+  box-sizing: border-box;
 `;
 
 const LoginWrap = styled.div`
@@ -92,7 +92,6 @@ const TextOne = styled.h3`
   color: white;
   font-size: 13px;
   display: inline;
-  
 `;
 
 const Text = styled.h3`
