@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 // import { useSelector } from "react-redux";
@@ -7,59 +7,45 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Login = (props) => {
-
-
-    let [loginId, setLoginId] = useState("");
-    let [loginPassword, setLoginPassword] = useState("");
-    let [savedLoginId, setSavedLoginId] = useState("");
-    let [savedLoginPassword, setSavedLoginPassword] = useState("");
-    let tokenId = useRef(null);
-    let [savedTokenId, setSavedTokenId] = useState("");
-
-
-    let sessionStorage = window.sessionStorage;
+  let sessionStorage = window.sessionStorage;
 
   const username = React.useRef(null);
   const password = React.useRef(null);
 
-  const axiosLogin=async() =>{
-    const res = await axios.post("http://lightromance.shop/user/login",{
-      username : username.current.value,
-      password : password.current.value
-      
-    });
-    tokenId.current =res.data;
-    console.log(res);
-    console.log(res.data);
-    console.log(tokenId.current);
-    window.alert(res.data.answer);
-  }
+  const axiosLogin = async () => {
+    try {
+      const res = await axios.post("http://lightromance.shop/user/login", {
+        username: username.current.value,
+        password: password.current.value,
+      });
+      if (res.status === 200 && res.data) {
+        sessionStorage.setItem("token", res.data);
+      }
+      console.log(res);
+      console.log(res.data);
+      window.alert(res.data.answer);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  
-
-  const navigate = useNavigate(); 
-  
-  // onChange={ (e)=>{
-  //   setLoginId(e.res.data) }}
-
+  const navigate = useNavigate();
 
   return (
-    
     <div>
       <Wrap>
-        {/* <Box> */}
         <LoginWrap>
           <Title>Selecthing</Title>
-          <br/>
+          <br />
           <WriteBox>
-            <Id type="text" placeholder="ID를 입력해주세요" ref={username} onChange={ (e)=>{
-                    setLoginId(e.target.value) }} />
+            <Id type="text" placeholder="ID를 입력해주세요" ref={username} />
           </WriteBox>
           <WriteBox>
-            <Id type="password" placeholder="PW를 입력해주세요" ref={password} onChange={ (e)=>{
-                    setLoginPassword(e.target.value)
-                } }/>
-                
+            <Id
+              type="password"
+              placeholder="PW를 입력해주세요"
+              ref={password}
+            />
           </WriteBox>
           <WriteBox>
             <TextOne>아직 회원이 아니신가요?</TextOne>
@@ -72,46 +58,25 @@ const Login = (props) => {
             </Text>
           </WriteBox>
           <WriteBox>
-          
-          
-          <Back  onClick={ ()=>{ 
-                    axiosLogin();
-                    
-                    sessionStorage.setItem("loginId", loginId);
-                    sessionStorage.setItem("loginPassword", loginPassword);
-                    sessionStorage.setItem("tokenId", tokenId.current);
-
-                    setSavedLoginId(sessionStorage.getItem("loginId"));
-                    setSavedLoginPassword(sessionStorage.getItem("loginPassword"));
-                    setSavedTokenId(sessionStorage.getItem("tokenId"));
-
-                    
-                } }>로그인</Back>
-          <button onClick={ ()=>{
-                    sessionStorage.removeItem("loginId");
-                    sessionStorage.removeItem("loginPassword");
-                    sessionStorage.removeItem("tokenId");
-                    setSavedLoginId(sessionStorage.getItem("loginId"));
-                } }>로그아웃</button>
-          {/* <p>{props.text}</p> */}
-
-          <div>
-                sessionStorage에 저장된 loginId는 {savedLoginId} 이고 loginPassword는 {savedLoginPassword} tokenId는 {savedTokenId} 이다. 
-            </div>
-            <div>
-                { JSON.stringify(sessionStorage) }
-            </div>
-          
-
+            <Back
+              onClick={() => {
+                axiosLogin();
+              }}
+            >
+              로그인
+            </Back>
+            <button
+              onClick={() => {
+                sessionStorage.removeItem("token");
+              }}
+            >
+              로그아웃
+            </button>
           </WriteBox>
         </LoginWrap>
-
-        {/* </Box> */}
       </Wrap>
     </div>
-    
   );
-  
 };
 
 const Wrap = styled.div`
@@ -147,7 +112,7 @@ const Id = styled.input`
   height: 45px;
   width: 40%;
   margin-bottom: 15px;
-  padding: 5px 20px ;
+  padding: 5px 20px;
   border-radius: 5px;
   border-bottom: 2px solid rgb(219, 232, 216);
   border: 1.5px solid lightslategray;
@@ -155,9 +120,8 @@ const Id = styled.input`
   font-weight: 500;
   box-sizing: border-box;
   &:hover {
-    box-shadow: 0 0 7px #0C7586;
+    box-shadow: 0 0 7px #0c7586;
   }
-  
 `;
 
 const TextOne = styled.h3`
