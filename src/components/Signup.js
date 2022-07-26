@@ -3,12 +3,48 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { createList } from "../redux/modules/reduxsignup";
+import axios from "axios";
 
 const Signup = (props) => {
+
+  const axiosSignup=async() =>{
+    const res = await axios.post("http://lightromance.shop/user/signup",{
+      username : username.current.value,
+      password : password.current.value,
+      nickname : nickname.current.value,
+      password2: password2.current.value
+    });
+    console.log(res);
+
+    window.alert(res.data.answer);
+  }
+
+  const axiosNicknameCheck=async() =>{
+    const res = await axios.get("http://lightromance.shop/user/login/nickNames"
+    ,{
+      body:{"nickname" : nickname.current.value}
+    }
+    );
+    console.log(res);
+
+    window.alert(res.data.answer);
+  }
+
+  const axiosIdCheck=async() =>{
+    const res = await axios.get("http://lightromance.shop/user/login/userIds"
+    ,{
+      body :{"username" : username.current.value}
+    }
+    );
+    console.log(res);
+
+    window.alert(res.data.answer);
+  }
+
   const nickname = React.useRef(null);
-  const id = React.useRef(null);
+  const username = React.useRef(null);
   const password = React.useRef(null);
-  const passwordcheck = React.useRef(null);
+  const password2 = React.useRef(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,26 +53,26 @@ const Signup = (props) => {
   console.log(my_lists);
 
   const saveWord = (e) => {
-    if(nickname.current.value===""||id.current.value===""||password.current.value===""||passwordcheck.current.value===""){
+    if(nickname.current.value===""||username.current.value===""||password.current.value===""||password2.current.value===""){
     e.preventDefault();
       alert("필수입력값을 입력해주세요!")
     }
-    else if(password.current.value !== passwordcheck.current.value){
+    else if(password.current.value !== password2.current.value){
       e.preventDefault();
       alert("비밀번호와 비밀번호 재확인칸이 일치하지 않습니다!");}
       else{
 
     e.preventDefault();       //새로고침 막는거(onSubmit)
     console.log(nickname.current.value);
-    console.log(id.current.value);
+    console.log(username.current.value);
     console.log(password.current.value);
-    console.log(passwordcheck.current.value);
+    console.log(password2.current.value);
 
     const new_word = {
       nickname: nickname.current.value,
-      id: id.current.value,
+      username: username.current.value,
       password: password.current.value,
-      passwordcheck: passwordcheck.current.value,
+      password2: password2.current.value,
     };
     dispatch(createList(new_word));
     // const addList =() => {
@@ -63,6 +99,7 @@ const Signup = (props) => {
                 />
                 <Button onClick={(e) => {
                   e.preventDefault();
+                  axiosNicknameCheck();
                 }} >중복확인</Button>
               </InputWrap>
             </WriteBox>
@@ -74,10 +111,11 @@ const Signup = (props) => {
                   type="text"
                   placeholder="아이디를 입력해주세요"
                   maxLength={12}
-                  ref={id}
+                  ref={username}
                 />
                 <Button onClick={(e) => {
                   e.preventDefault();
+                  axiosIdCheck();
                 }}>중복확인</Button>
               </InputWrap>
             </WriteBox>
@@ -101,7 +139,7 @@ const Signup = (props) => {
                   type="password"
                   placeholder="비밀번호 재확인"
                   maxLength={16}
-                  ref={passwordcheck}
+                  ref={password2}
                 />
               </InputWrap>
             </WriteBox>
@@ -110,12 +148,12 @@ const Signup = (props) => {
             <ButtonBox>
               <Back
                 onClick={() => {
-                  navigate("/Login");
+                  navigate("/user/login");
                 }}
               >
                 뒤로가기
               </Back>
-              <Back>회원가입</Back>
+              <Back onClick={axiosSignup}>회원가입</Back>
             </ButtonBox>
           </form>
         </LoginWrap>

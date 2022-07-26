@@ -9,7 +9,7 @@ const initialState = {
       nickname: "정옴",
       id: "rrr123@naver.com",
       password:"rrr123!",
-      passwordcheck: "rrr123!", 
+      password2: "rrr123!", 
     }
   ]
 }
