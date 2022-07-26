@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 // import { useSelector } from "react-redux";
@@ -13,7 +13,7 @@ const Login = (props) => {
     let [loginPassword, setLoginPassword] = useState("");
     let [savedLoginId, setSavedLoginId] = useState("");
     let [savedLoginPassword, setSavedLoginPassword] = useState("");
-    let [tokenId, setTokenId] = useState("");
+    let tokenId = useRef(null);
     let [savedTokenId, setSavedTokenId] = useState("");
 
 
@@ -28,8 +28,10 @@ const Login = (props) => {
       password : password.current.value
       
     });
+    tokenId.current =res.data;
     console.log(res);
     console.log(res.data);
+    console.log(tokenId.current);
     window.alert(res.data.answer);
   }
 
@@ -73,15 +75,17 @@ const Login = (props) => {
           
           
           <Back  onClick={ ()=>{ 
+                    axiosLogin();
+                    
                     sessionStorage.setItem("loginId", loginId);
                     sessionStorage.setItem("loginPassword", loginPassword);
-                    sessionStorage.setItem("tokenId", tokenId);
+                    sessionStorage.setItem("tokenId", tokenId.current);
 
                     setSavedLoginId(sessionStorage.getItem("loginId"));
                     setSavedLoginPassword(sessionStorage.getItem("loginPassword"));
                     setSavedTokenId(sessionStorage.getItem("tokenId"));
 
-                    axiosLogin();
+                    
                 } }>로그인</Back>
           <button onClick={ ()=>{
                     sessionStorage.removeItem("loginId");
