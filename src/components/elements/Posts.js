@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 const Posts = ({ data }) => {
 
   const navigate = useNavigate()
-  console.log(data)
+  // console.log(data)
 
   return (
     <Post onClick={() => {

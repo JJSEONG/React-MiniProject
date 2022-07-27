@@ -5,6 +5,7 @@ import Logo from '../깻잎논쟁.png'
 import { createPost } from '../redux/modules/selecthing'
 import { db, storage } from '../shared/firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import axios from 'axios'
 
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -19,6 +20,8 @@ const AddPost = () => {
   const temp_img = "https://iconbjjbelfast.com/wp-content/uploads/2017/04/default-image.jpg"
   const [ files, setFiles ] = React.useState(temp_img);
   const [ filestxt, setFilesTxt ] = React.useState("");
+
+  console.log(files)
 
   const saveFileImage = async (e) => {
     const uploaded_file = await uploadBytes(
@@ -41,36 +44,50 @@ const AddPost = () => {
     };
   }
 
+
+
   const mbti_ref = React.useRef(null);
   const title_ref = React.useRef(null);
   const desc_ref = React.useRef(null);
 
-  const newPost = (e) => {
+  const newPost = async (e) => {
 
     const date = new Date();
     const today = date.toLocaleString();
     let new_post = {
-      username: "user@name.com",
-      nickname: "프랑스",
+      // username: "user@name.com",
+      // nickname: "프랑스",
       title: title_ref.current.value,
       images: files,
-      contents: desc_ref.current.value,
-      agreeCount: 0,
-      disagreeCount: 0,
-      agree: false,
-      disagree: false,
-      date: today,
-      mbti: mbti_ref.current.value,
-      comment : []
+      content: desc_ref.current.value,
+      // agreeCount: 0,
+      // disagreeCount: 0,
+      // agree: false,
+      // disagree: false,
+      // date: today,
+      // mbti: mbti_ref.current.value,
+      // comment : []
     }
 
-    console.log(new_post)
+    const Token = sessionStorage.getItem("token")
+    const res = await axios.post("http://lightromance.shop/newBoards",
+      {
+        title: title_ref.current.value,
+        image: files,
+        content: desc_ref.current.value,
+        mbti: mbti_ref.current.value,
+      }, {
+        headers: {
+          "token": Token
+        }
+      });
+    console.log(res)
 
-    dispatch(createPost(new_post))
+    // dispatch(createPost(new_post))
     e.preventDefault();
 
     window.alert("게시글 작성에 성공하셨습니다.")
-    // navigate("/")
+    navigate("/selecthing")
   }
 
   return (
@@ -124,7 +141,7 @@ const AddPost = () => {
         <BtnWrap>
           <button type="submit" onClick={() => {
             window.alert("메인으로 돌아갑니다.")
-            navigate("/")
+            navigate("/selecthing")
           }}>취소하기</button>
           <button type="submit" onClick={newPost}>업로드 하기</button>
         </BtnWrap>

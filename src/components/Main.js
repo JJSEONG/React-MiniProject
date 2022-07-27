@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import Header from './elements/Header'
 import Posts from './elements/Posts'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { loadPostDB } from '../redux/modules/selecthing'
 
 const Main = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const data = useSelector((state) => state.selecthing)
-  console.log(data)
+  console.log("데이터", data)
+  useEffect(() => {
+    dispatch(loadPostDB())
+  }, [])
 
   return (
     <div>

@@ -1,5 +1,7 @@
 // selecthing.js
 
+import axios from "axios";
+
 // Actions
 const LOAD = "selecthing/LOAD";
 const UPDATE = "selecthing/UPDATE"
@@ -115,10 +117,24 @@ export function createPost(post) {
   return { type: CREATE_POST, post }
 }
 
+// middlewares
+export const loadPostDB = () => {
+  return async function (dispatch) {
+    try {
+      const res = await axios.get("http://lightromance.shop/selecthing");
+      console.log(res)
+      dispatch(loadPost)
+    } catch(error) {
+      console.log(error)
+    }
+  }
+}
+
 // Reducer
 export default function reducer(state = initialState, action = {} ) {
   switch (action.type) {
     case "selecthing/LOAD": {
+      console.log(state, action)
       return { post: action.post }
     }
 
