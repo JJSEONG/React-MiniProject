@@ -3,17 +3,14 @@ import styled from 'styled-components'
 import Header from './elements/Header'
 import { useParams,useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { updatePost, detailPostDB } from '../redux/modules/selecthing'
+import { updatePost } from '../redux/modules/selecthing'
 import { useDispatch } from 'react-redux'
 import { loadDetailDB } from '../redux/modules/detail'
 
 const Detail = () => {
 
-
   const params = useParams();
   const dispatch = useDispatch();
-  // dispatch(detailPostDB(params.id));
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(loadDetailDB(params.id))
@@ -25,8 +22,7 @@ const Detail = () => {
   //   if(post.id === params.id) return post
   // })
 
-//   const post_detail = useSelector((state) => state.selecthing.post)
-//   console.log(post_detail)
+  const navigate = useNavigate();
 
   const [selected, setSelected] = React.useState("");
   const handleSelect = (e) => {
