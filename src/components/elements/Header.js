@@ -12,6 +12,9 @@ const Header = () => {
         navigate("/")
       }}>Selecthing</Title>
       <LogoutBtn onClick = {() => {
+        
+          sessionStorage.removeItem("token");
+        
         window.alert("로그아웃 하셨습니다. 로그인 화면으로 돌아갑니다.")
         navigate("user/login")
       }}>LOGOUT</LogoutBtn>

@@ -17,6 +17,7 @@ const Signup = (props) => {
     console.log(res);
 
     window.alert(res.data);
+    navigate("/user/login");
   }
 
   const axiosNicknameCheck=async() =>{
@@ -80,6 +81,7 @@ const Signup = (props) => {
     // };
   };
 }
+  
 
   return (
     <div>

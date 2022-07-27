@@ -20,12 +20,16 @@ const Login = (props) => {
       });
       if (res.status === 200 && res.data) {
         sessionStorage.setItem("token", res.data);
+        navigate("/");
       }
       console.log(res);
       console.log(res.data);
-      window.alert(res.data.answer);
+      window.alert("아이디, 비밀번호를 확인해주세요!");
+      
     } catch (error) {
       console.log(error);
+      // window.alert("아이디, 비밀번호를 확인해주세요!");
+      
     }
   };
 
@@ -65,13 +69,7 @@ const Login = (props) => {
             >
               로그인
             </Back>
-            <button
-              onClick={() => {
-                sessionStorage.removeItem("token");
-              }}
-            >
-              로그아웃
-            </button>
+           
           </WriteBox>
         </LoginWrap>
       </Wrap>
