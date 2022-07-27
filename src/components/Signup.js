@@ -40,8 +40,7 @@ const Signup = (props) => {
       body:{"nickname" : nickname.current.value}
     }
     );
-    console.log(res);
-
+    
     window.alert(res.data.answer);
   }
 
@@ -51,7 +50,6 @@ const Signup = (props) => {
       body :{"username" : username.current.value}
     }
     );
-    console.log(res);
 
     window.alert(res.data.answer);
   }
@@ -65,19 +63,16 @@ const Signup = (props) => {
   const dispatch = useDispatch();
 
   const my_lists = useSelector((state) => state.reduxsignup);
-  console.log(my_lists);
 
   const saveWord = (e) => {
     if(nickname.current.value===""||username.current.value===""||password.current.value===""||password2.current.value==="") {
     e.preventDefault();
-      // alert("필수입력값을 입력해주세요!")
     }
     else if(password.current.value !== password2.current.value) {
       e.preventDefault();
-      // alert("비밀번호와 비밀번호 재확인칸이 일치하지 않습니다!");
     }
     else {
-      e.preventDefault();       //새로고침 막는거(onSubmit)
+      e.preventDefault();
 
     const new_word = {
       nickname: nickname.current.value,
@@ -86,16 +81,12 @@ const Signup = (props) => {
       password2: password2.current.value,
     };
     dispatch(createList(new_word));
-    // const addList =() => {
-    //   dispatch(createList(nickname.current.value))
-    // };
   };
 }
 
   return (
     <div>
       <Wrap>
-        {/* <Box> */}
         <LoginWrap>
           <Title>Selecthing</Title>
           <form onSubmit={(e) => saveWord(e)}>
@@ -168,8 +159,6 @@ const Signup = (props) => {
             </ButtonBox>
           </form>
         </LoginWrap>
-
-        {/* </Box> */}
       </Wrap>
     </div>
   );
@@ -188,11 +177,9 @@ const LoginWrap = styled.div`
   width: 32%;
   height: 80%;
   margin: auto;
-  /* border : 1.5px solid lightslategray; */
   border-radius: 3px;
   padding-top: 20px;
   padding-bottom: 5%;
-  /* background-color: whitesmoke; */
   @media (max-width: 320px) {
     width: 80%;
   }
@@ -227,7 +214,6 @@ const Subject = styled.h3`
   width: 100%;
   margin: 15px 0 3px 0;
   font-size: 16px;
-  /* width: 40%; */
   display: flex;
   padding-left: 10px;
   color: white;

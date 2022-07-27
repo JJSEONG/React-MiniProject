@@ -1,24 +1,26 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import Header from './elements/Header'
 import { useParams,useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { updatePost } from '../redux/modules/selecthing'
 import { useDispatch } from 'react-redux'
+import { loadDetailDB } from '../redux/modules/detail'
 
 const Detail = () => {
 
   const params = useParams();
-  // console.log(params.nickname)
   const dispatch = useDispatch();
 
-  const post_detail = useSelector((state) => state.selecthing.post)
-  // console.log(post_detail)
+  useEffect(() => {
+    dispatch(loadDetailDB(params.id))
+  }, [])
+  
+  const post_detail = useSelector((state) => state.detail.detail)
 
-  const include = post_detail.find((post) => {
-    if(post.nickname === params.nickname) return post
-  })
-  // console.log(include);
+  // const include = post_detail.find((post) => {
+  //   if(post.id === params.id) return post
+  // })
 
   const navigate = useNavigate();
 
@@ -26,127 +28,96 @@ const Detail = () => {
   const handleSelect = (e) => {
     setSelected(e.target.value);
   };
-  // console.log(selected);
 
   const com_ref = React.useRef(null);
-
-  const agreecount_ref = React.useRef(include.agreeCount)
-  const disagreecount_ref = React.useRef(include.disagreeCount)
-  const agree_ref = React.useRef(include.agree)
-  const disagree_ref = React.useRef(include.disagree)
   
   const [ checked, setChecked ] = React.useState("");
 
   const post_agree = {
-    agreeCount: agreecount_ref.current,
-    disagreeCount: disagreecount_ref.current,
-    agree: agree_ref.current,
-    disagree: disagree_ref.current,
+    agreeCount: post_detail.agreeCount,
+    disagreeCount: post_detail.disagreeCount,
+    agree: post_detail.agree,
+    disagree: post_detail.disagree,
   }
   
   const agree_btn = () => {
-    if(disagree_ref.current === true) {
+    if(post_detail.disagree === true) {
       window.alert(
         "이미 반대를 클릭하셨습니다.\n반대 클릭 해제 후 다시 시도해주세요."
         )
       return;
     }
-    if(agree_ref.current === false) {
-      agreecount_ref.current = agreecount_ref.current + 1
-      agree_ref.current = true
-      disagree_ref.current = false
+    if(post_detail.agree === false) {
+      post_detail.agreeCount = post_detail.agreeCount + 1
+      post_detail.agree = true
+      post_detail.disagree = false
 
       setChecked("checked")
-
       window.alert("[찬성] 역시 그럴줄 알았어요 !")
-
-      post_agree.agreeCount = agreecount_ref.current;
-      post_agree.agree = agree_ref.current;
-      post_agree.disagree = disagree_ref.current;
-
-      console.log(post_agree)
-      dispatch(updatePost(post_agree, params.nickname))
+      dispatch(updatePost(post_agree, params.id))
     } else {
-      agreecount_ref.current = agreecount_ref.current - 1
-      agree_ref.current = false
-      disagree_ref.current = false
+      post_detail.agreeCount = post_detail.agreeCount - 1
+      post_detail.agree = false
+      post_detail.disagree = false
 
       setChecked("un-checked")
-
       window.alert("[찬성 취소] 마음이 바뀌셨나요 ?")
-
-      post_agree.agreeCount = agreecount_ref.current;
-      post_agree.agree = agree_ref.current;
-      post_agree.disagree = disagree_ref.current;
-
       dispatch(updatePost(post_agree, params.nickname))
     }
   }
 
   const disagree_btn = () => {
-    if(agree_ref.current === true) {
+    if(post_detail.agree === true) {
       window.alert("이미 찬성을 클릭하셨습니다.\n찬성 클릭 해제 후 다시 시도해주세요.")
       return;
     }
-    if(disagree_ref.current === false) {
-      disagreecount_ref.current = disagreecount_ref.current + 1
-      agree_ref.current = false
-      disagree_ref.current = true
+    if(post_detail.disagree === false) {
+      post_detail.disagreeCount = post_detail.disagreeCount + 1
+      post_detail.agree = false
+      post_detail.disagree = true
       setChecked("checked")
-
       window.alert("[반대] 내가 정녕 싫으시오 ?")
-
-      post_agree.disagreeCount = disagreecount_ref.current;
-      post_agree.agree = agree_ref.current;
-      post_agree.disagree = disagree_ref.current;
-
       dispatch(updatePost(post_agree, params.nickname))
     } else {
-      disagreecount_ref.current = disagreecount_ref.current - 1
-      agree_ref.current = false
-      disagree_ref.current = false
+      post_detail.disagreeCount = post_detail.disagreeCount - 1
+      post_detail.agree = false
+      post_detail.disagree = false
       setChecked("un-checked")
-
       window.alert("[반대 취소] 역시 그럴줄 알았소 !")
-
-      post_agree.disagreeCount = disagreecount_ref.current;
-      post_agree.agree = agree_ref.current;
-      post_agree.disagree = disagree_ref.current;
-
       dispatch(updatePost(post_agree, params.nickname))
     }
   }
 
-  // console.log("포스트어그리",post_agree)
+  console.log("포스트어그리",post_agree)
 
   return (
     <div>
       <Header />
       <MainWrap>
         <SubTitle>
-          { include.title  }
+          {post_detail.title}
         </SubTitle>
         <WriteInfo>
-          <div>작성일: { include.date }</div>
-          <div>작성자: { include.nickname } (MBTI: { include.mbti })</div>
+          <div>작성일: {post_detail.createdAt}</div>
+          <div>작성자: {post_detail.nickname} (MBTI: {post_detail.mbti})</div>
         </WriteInfo>
         <PreView>
-          <img src={ include.images } alt="" />
+          <img src={post_detail.image} alt="" />
         </PreView>
         <Desc>
-          <div>{ include.contents }</div>
+          <div>{post_detail.content}</div>
         </Desc>
 
         <BtnWrap>
-          <AgreeButton onClick={agree_btn}>
+          <AgreeButton onClick={agree_btn} >
             <p style={{fontSize: "17px"}} >
-              찬성 { agreecount_ref.current } 표
+              찬성 {post_detail.agreeCount} 표
             </p>
           </AgreeButton>
           
-          <OppositionButton onClick={disagree_btn}>
+          <OppositionButton onClick={disagree_btn} >
             <p style={{fontSize: "17px"}}>
-              반대 { disagreecount_ref.current } 표
+              반대 {post_detail.disagreeCount} 표
             </p>
           </OppositionButton>
           
@@ -154,7 +125,6 @@ const Detail = () => {
 
         <DescReply>
             <ReplyWriteBox>
-              {/* <div>댓글</div> */}
               <SelectBtn defaultValue="default" id="mbti" name="mbti" onChange={handleSelect}>
                 <option value="default" disabled>MBTI</option>
                 <option value="ISTJ">ISTJ </option>
@@ -179,7 +149,7 @@ const Detail = () => {
             </ReplyWriteBox>
             <ReplyBox>
               {
-                include.comment.map((v, i) => {
+                post_detail.comments.map((v, i) => {
                     return (  
                       <CommentWrap key = { i }>
                         <div><span>{ v.mbti }</span> { v.nickname }</div>
@@ -192,9 +162,8 @@ const Detail = () => {
           </DescReply>
         
           <BackButton type="submit" onClick={() => {
-            navigate("/")
+            navigate("/selecthing")
           }}>뒤로가기</BackButton>
-        
       </MainWrap>
     </div>
   )
@@ -209,7 +178,6 @@ const MainWrap = styled.div`
 const SubTitle = styled.h2`
   margin: 120px auto 30px;  
   font-size: 28px;
-  /* font-style: italic; */
   color: white;
   text-shadow:
     2px 0 2px #5D9D8B,
@@ -226,7 +194,6 @@ const WriteInfo =styled.h3`
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
-  /* float: right; */
   div {
     margin: 0 2px;
   }
@@ -308,7 +275,6 @@ const SelectBtn = styled.select`
 const ReplyInputBox = styled.input`
     width: 60%;
     height: 80%;
-    /* background-color: #1ABC9C; */
     color: black;
     border: none; 
     border-bottom: 1.5px solid #1ABC9C;
@@ -338,7 +304,6 @@ const ReplyBox = styled.div`
   align-items: center;
   padding: 4px 20px;
   box-sizing: border-box;
-  /* border: 2px solid black; */
 `
 
 const BtnWrap = styled.div`
@@ -361,32 +326,32 @@ const BtnWrap = styled.div`
     cursor: pointer;
     transition: 0.5s;
   }
-  p{
+  p {
     margin: 5px auto 0; 
   }
 `
 
 const AgreeButton =styled.button`
 
-    padding-top:15px;
-    background-color: #1ABC9C;
-    border: 2px solid #1ABC9C;
-    color: white;
-    &:hover{
+  padding-top:15px;
+  background-color: #1ABC9C;
+  border: 2px solid #1ABC9C;
+  color: white;
+  &:hover{
     background-color: transparent;
     color: #1ABC9C;
-    }
+  }
 `;
 
 const OppositionButton =styled.button`
-padding-top:15px;
-background-color: gray;
-    border: 2px solid gray;
-    color: white;
-    &:hover{
+  padding-top:15px;
+  background-color: gray;
+  border: 2px solid gray;
+  color: white;
+  &:hover{
     background-color: transparent;
     color: gray;
-    }
+  }
 `;
 
 const BackButton = styled.button`
@@ -400,8 +365,8 @@ const BackButton = styled.button`
     cursor: pointer;
     &:hover{
       background-color: #1ABC9C;
-    color: white;
-    border: 2px solid #1ABC9C;
+      color: white;
+      border: 2px solid #1ABC9C;
     }
 `;
 

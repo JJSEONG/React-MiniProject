@@ -44,8 +44,6 @@ const AddPost = () => {
     };
   }
 
-
-
   const mbti_ref = React.useRef(null);
   const title_ref = React.useRef(null);
   const desc_ref = React.useRef(null);

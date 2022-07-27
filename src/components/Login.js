@@ -1,9 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-// import { useSelector } from "react-redux";
-// import { useCookies } from 'react-cookie';
 import axios from "axios";
 
 const Login = (props) => {
@@ -51,20 +48,12 @@ const Login = (props) => {
           </WriteBox>
           <WriteBox>
             <TextOne>아직 회원이 아니신가요?</TextOne>
-            <Text
-              onClick={() => {
-                navigate("/signup");
-              }}
-            >
+            <Text onClick={() => { navigate("/signup"); }}>
               회원가입
             </Text>
           </WriteBox>
           <WriteBox>
-            <Back
-              onClick={() => {
-                axiosLogin();
-              }}
-            >
+            <Back onClick={() => { axiosLogin(); }}>
               로그인
             </Back>
           </WriteBox>
@@ -133,11 +122,10 @@ const Text = styled.h3`
   color: white;
   font-size: 13px;
   display: inline;
+  cursor: pointer;
   &:hover {
     text-shadow: 2px 0 2px #2f4858;
   }
-  cursor: pointer;
-  /* cursor: pointer; */
 `;
 
 const Back = styled.button`
