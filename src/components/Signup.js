@@ -14,9 +14,24 @@ const Signup = (props) => {
       nickname : nickname.current.value,
       password2: password2.current.value
     });
-    console.log(res);
-
-    window.alert(res.data);
+    if(res.status === 200 && nickname.current.value === "") {
+      window.alert("닉네임을 입력해주세요")
+    } else if(res.status === 200 && res.data === '아이디를 3자 이상 입력하세요') {
+      window.alert(res.data)
+    } else if(res.status === 200 && res.data === '비밀번호를 4자 이상 입력하세요') {
+      window.alert(res.data)
+    } else if(res.status === 200 && res.data === '비밀번호가 일치하지 않습니다') {
+      window.alert(res.data)
+    } else if(res.status === 200 && nickname.current.value === "") {
+      window.alert("닉네임을 입력해주세요")
+    } else if(res.status === 200 && res.data === '중복된 id 입니다.') {
+      window.alert(res.data)
+    } else if(res.status === 200 && res.data === '중복된 nickname 입니다.') {
+      window.alert(res.data)
+    } else {
+      window.alert(`${nickname.current.value}님💚 \n회원가입 축하드립니다.`)
+      navigate("/")
+    }
   }
 
   const axiosNicknameCheck=async() =>{
@@ -53,20 +68,16 @@ const Signup = (props) => {
   console.log(my_lists);
 
   const saveWord = (e) => {
-    if(nickname.current.value===""||username.current.value===""||password.current.value===""||password2.current.value===""){
+    if(nickname.current.value===""||username.current.value===""||password.current.value===""||password2.current.value==="") {
     e.preventDefault();
-      alert("필수입력값을 입력해주세요!")
+      // alert("필수입력값을 입력해주세요!")
     }
-    else if(password.current.value !== password2.current.value){
+    else if(password.current.value !== password2.current.value) {
       e.preventDefault();
-      alert("비밀번호와 비밀번호 재확인칸이 일치하지 않습니다!");}
-      else{
-
-    e.preventDefault();       //새로고침 막는거(onSubmit)
-    console.log(nickname.current.value);
-    console.log(username.current.value);
-    console.log(password.current.value);
-    console.log(password2.current.value);
+      // alert("비밀번호와 비밀번호 재확인칸이 일치하지 않습니다!");
+    }
+    else {
+      e.preventDefault();       //새로고침 막는거(onSubmit)
 
     const new_word = {
       nickname: nickname.current.value,
@@ -148,7 +159,7 @@ const Signup = (props) => {
             <ButtonBox>
               <Back
                 onClick={() => {
-                  navigate("/user/login");
+                  navigate("/");
                 }}
               >
                 뒤로가기

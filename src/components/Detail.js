@@ -117,7 +117,7 @@ const Detail = () => {
     }
   }
 
-  console.log("포스트어그리",post_agree)
+  // console.log("포스트어그리",post_agree)
 
   return (
     <div>
