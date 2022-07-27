@@ -5,19 +5,19 @@ import { useNavigate } from 'react-router-dom'
 const Posts = ({ data }) => {
 
   const navigate = useNavigate()
-  // console.log(data)
+  console.log(data)
 
   return (
     <Post onClick={() => {
-      navigate('/boards/' + data.nickname + '/details')
+      navigate('/boards/' + data.id + '/details')
     }}>
       <Wrap>
         <ImgWrap>
-          <img src={data.images} alt="" />
+          <img src={data.image} alt="" />
         </ImgWrap>
         <ConWrap>
           <h2>{data.title}</h2>
-          <p>{data.contents}</p>
+          <p>{data.content}</p>
         </ConWrap>
       </Wrap>
     </Post>
