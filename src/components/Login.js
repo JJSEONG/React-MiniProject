@@ -20,14 +20,16 @@ const Login = (props) => {
       });
       if (res.status === 200 && res.data) {
         sessionStorage.setItem("token", res.data);
-        window.alert(`${username.current.value}님💚 \n로그인 하셨습니다.`)
+
+        window.alert(`${username.current.value}님💚 \n로그인 하셨습니다.`);
         navigate("/selecthing");
       } else {
-        window.alert('ID와 PW를 다시 한번 확인해주세요.')
-        window.location.reload()
+        window.alert("ID와 PW를 다시 한번 확인해주세요.");
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);
+      // window.alert("아이디, 비밀번호를 확인해주세요!");
     }
   };
 
