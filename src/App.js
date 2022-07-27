@@ -9,8 +9,6 @@ import Detail from './components/Detail';
 
 import React from "react";
 
-
-
 function App() {
   return (
     <div className="App">
@@ -19,7 +17,7 @@ function App() {
         <Route path="/selecthing" element = {<Main /> } />
         <Route path="/signup" element={<Signup />} />
         <Route path="/newBoards" element = {<AddPost />} />
-        <Route path="/boards/:id/details" element={<Detail />}/>
+        <Route path="/boards/:id/details" element={<Detail />} />
       </Routes>
     </div>
   );

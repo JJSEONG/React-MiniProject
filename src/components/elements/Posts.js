@@ -1,16 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 const Posts = ({ data }) => {
 
   const navigate = useNavigate()
-  console.log(data)
+  const dispatch = useDispatch()
+  
+
+  const loadDetail = () => {
+    try {
+      navigate(`/boards/${data.id}/details`)
+    } catch(error) {
+      console.log(error)
+    }
+  }
 
   return (
-    <Post onClick={() => {
-      navigate('/boards/' + data.id + '/details')
-    }}>
+    <Post onClick={loadDetail}>
       <Wrap>
         <ImgWrap>
           <img src={data.image} alt="" />

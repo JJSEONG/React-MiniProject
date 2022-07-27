@@ -11,16 +11,11 @@ const Main = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const data = useSelector((state) => state.selecthing)
-  console.log("데이터", data)
-
-  const data2 = useSelector((state) => state.selecthing.post)
-  console.log("데이터2", data2)
-
   useEffect(() => {
     dispatch(loadPostDB())
   }, [])
 
+  const data = useSelector((state) => state.selecthing.post)
 
   return (
     <div>
@@ -28,7 +23,7 @@ const Main = () => {
       <MainWrap>
         <Banner></Banner>
         {
-          data.post.map((v, idx) => {
+          data.map((v, idx) => {
             return (
               <Posts data = { v } key = { idx } />
             )
