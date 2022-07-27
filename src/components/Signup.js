@@ -14,6 +14,7 @@ const Signup = (props) => {
       nickname : nickname.current.value,
       password2: password2.current.value
     });
+
     if(res.status === 200 && nickname.current.value === "") {
       window.alert("닉네임을 입력해주세요")
     } else if(res.status === 200 && res.data === '아이디를 3자 이상 입력하세요') {
@@ -83,6 +84,7 @@ const Signup = (props) => {
     dispatch(createList(new_word));
   };
 }
+  
 
   return (
     <div>
