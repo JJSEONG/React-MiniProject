@@ -50,42 +50,37 @@ const AddPost = () => {
 
   const newPost = async (e) => {
 
-    const date = new Date();
-    const today = date.toLocaleString();
-    let new_post = {
-      // username: "user@name.com",
-      // nickname: "프랑스",
-      title: title_ref.current.value,
-      images: files,
-      content: desc_ref.current.value,
-      // agreeCount: 0,
-      // disagreeCount: 0,
-      // agree: false,
-      // disagree: false,
-      // date: today,
-      // mbti: mbti_ref.current.value,
-      // comment : []
+    if(filestxt === "") {
+      window.alert("사진을 선택해주세요.")
+      return;
+    } else if(mbti_ref.current.value === "default") {
+      window.alert("MBTI를 선택해주세요.")
+      return;
+    } else if(title_ref.current.value === "") {
+      window.alert("주제를 입력해주세요.")
+      return;
+    } else if(desc_ref.current.value === "") {
+      window.alert("내용을 입력해주세요.")
+      return;
+    } else {
+      const Token = sessionStorage.getItem("token")
+      const res = await axios.post("http://lightromance.shop/newBoards",
+        {
+          title: title_ref.current.value,
+          image: files,
+          content: desc_ref.current.value,
+          mbti: mbti_ref.current.value,
+        }, {
+          headers: {
+            "token": Token
+          }
+        });
+      console.log(res)
+
+      e.preventDefault();
+      window.alert("게시글 작성에 성공하셨습니다.")
+      navigate("/selecthing")
     }
-
-    const Token = sessionStorage.getItem("token")
-    const res = await axios.post("http://lightromance.shop/newBoards",
-      {
-        title: title_ref.current.value,
-        image: files,
-        content: desc_ref.current.value,
-        mbti: mbti_ref.current.value,
-      }, {
-        headers: {
-          "token": Token
-        }
-      });
-    console.log(res)
-
-    // dispatch(createPost(new_post))
-    e.preventDefault();
-
-    window.alert("게시글 작성에 성공하셨습니다.")
-    navigate("/selecthing")
   }
 
   return (
@@ -152,6 +147,15 @@ const MainWrap = styled.div`
   width: 35%;
   height: 100%;
   margin: 0 auto;
+  @media (max-width: 320px) {
+    width: 95%;
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    width: 80%;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    width: 70%;
+  }
 `
 
 const SubTitle = styled.h2`
@@ -179,6 +183,15 @@ const PreView = styled.div`
     height: 100%;
     object-fit: cover;
   }
+  @media (max-width: 320px) {
+    height: 200px;
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    height: 260px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    height: 320px;
+  }
 `
 const Filewrap = styled.div`
   width: 100%;
@@ -199,6 +212,15 @@ const FileInput = styled.input`
   text-align: left;
   padding: 4px 20px;
   box-sizing: border-box;
+  @media (max-width: 320px) {
+    font-size: 10px;
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    font-size: 12px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    font-size: 16px;
+  }
 `
 
 const FileBtn = styled.button`
@@ -220,6 +242,15 @@ const Label = styled.label`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 320px) {
+    font-size: 10px;
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    font-size: 12px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    font-size: 16px;
+  }
 `
 
 const MbtiWrap = styled.div`
@@ -240,6 +271,15 @@ const SelectLabel = styled.label`
   border-radius: 8px 0 0 8px;
   background-color: #1ABC9C;
   color: white;
+  @media (max-width: 320px) {
+    font-size: 10px;
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    font-size: 12px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    font-size: 16px;
+  }
 `
 
 const SelectBtn = styled.select`
@@ -253,6 +293,15 @@ const SelectBtn = styled.select`
   text-align: center;
   option[value="default"] {
     display: none;
+  }
+  @media (max-width: 320px) {
+    font-size: 10px;
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    font-size: 12px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    font-size: 16px;
   }
 `
 
@@ -287,6 +336,24 @@ const Topic = styled.div`
     padding: 4px 20px;
     outline: none;
   }
+  @media (max-width: 320px) {
+    font-size: 10px;
+    input {
+      font-size: 10px;
+    }
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    font-size: 12px;
+    input {
+      font-size: 12px;
+    }
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    font-size: 16px;
+    input {
+      font-size: 16px;
+    }
+  }
 `
 
 const Desc = styled.div`
@@ -304,6 +371,24 @@ const Desc = styled.div`
     border-radius: 8px;
     padding: 20px;
     outline: none;
+  }
+  @media (max-width: 320px) {
+    font-size: 10px;
+    textarea {
+      font-size: 10px;
+    }
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    font-size: 12px;
+    textarea {
+      font-size: 12px;
+    }
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    font-size: 16px;
+    textarea {
+      font-size: 16px;
+    }
   }
 `
 

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { loadPostDB } from '../redux/modules/selecthing'
+import Bannerimg from '../AorB.png'
 
 const Main = () => {
   const navigate = useNavigate();
@@ -21,7 +22,9 @@ const Main = () => {
     <div>
       <Header />
       <MainWrap>
-        <Banner></Banner>
+        <Banner>
+          <img src={Bannerimg} alt="" />
+        </Banner>
         {
           data.map((v, idx) => {
             return (
@@ -41,26 +44,44 @@ const MainWrap = styled.div`
   width: 50%;
   height: 100%;
   margin: 0 auto;
-  @media (max-width: 1024px) {
+  @media (max-width: 320px) {
+    width: 95%;
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    width: 80%;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
     width: 70%;
   }
 `
 
 const Banner = styled.div`
   width: 100%;
-  height: 400px;
+  height: 300px;
   border-radius: 20px;
   border: 5px solid #1ABC9C;
-  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFNg7TaPYPekSG6ZQBJJjdDaFq5PoCIMLgjw&usqp=CAU");
+  background-image: url("../AorB.jpeg");
   background-repeat: no-repeat;
   background-position: 30% 70%;
   background-size: cover;
   margin: 140px auto 30px;
   box-sizing: border-box;
+  overflow: hidden;
   /* 1024보다 작으면 ! */
   /* Desktop 1028 ~ 1440 / tablet 768 ~ 1027 / mobile 320 ~ 767 */
-  @media (max-width: 1024px) {
-    height: 300px;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @media (max-width: 320px) {
+    height: 160px;
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    height: 220px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    height: 260px;
   }
 `
 
