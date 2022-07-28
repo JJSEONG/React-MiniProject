@@ -15,17 +15,18 @@ const Login = (props) => {
         username: username.current.value,
         password: password.current.value,
       });
-      if (res.status === 200 && res.data) {
-        sessionStorage.setItem("token", res.data);
-
+      // console.log(res.headers.authorization)
+      if (res.status === 200 && res.headers.authorization) {
+        sessionStorage.setItem("token", res.headers.authorization);
         window.alert(`${username.current.value}님💚 \n로그인 하셨습니다.`);
         navigate("/selecthing");
       } else {
         window.alert("ID와 PW를 다시 한번 확인해주세요.");
-        window.location.reload();
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      window.alert("ID와 PW를 다시 한번 확인해주세요.");
+      window.location.reload();
       // window.alert("아이디, 비밀번호를 확인해주세요!");
     }
   };
