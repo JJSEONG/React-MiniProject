@@ -16,6 +16,8 @@ const Detail = () => {
     dispatch(loadDetailDB(params.id))
   }, [])
   
+ 
+  
   const post_detail = useSelector((state) => state.detail.detail)
 
   // const include = post_detail.find((post) => {
