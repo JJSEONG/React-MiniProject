@@ -66,7 +66,7 @@ const Wrap = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  @media (max-width: 768px) {
+  @media (max-width: 420px) {
     flex-direction: column;
     height: 100%;
   }
@@ -86,10 +86,10 @@ const ImgWrap = styled.div`
     height: 95%;
     border-radius: 50%;
   }
-  @media (max-width: 768px) {
-    width: 100px;
-    height: 100px;
-    margin: 20px 0;
+  @media (max-width: 420px) {
+    width: 70px;
+    min-height: 70px;
+    margin: 20px 0 0;
   }
 `
 
@@ -109,6 +109,15 @@ const ConWrap = styled.div`
       1px 0 6px #2F4858;
     box-sizing: border-box;
     transition: 0.6s;
+  }
+  @media (max-width: 320px) {
+    width: 100%;
+    h2 {
+      font-size: 13px;
+    }
+    p {
+      font-size: 11px;
+    }
   }
   @media (max-width: 768px) {
     width: 100%;

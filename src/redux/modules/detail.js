@@ -4,7 +4,7 @@ import axios from "axios";
 
 // Action
 const LOAD_DETAIL = "selecthing/LOAD_DETAIL"
-const LOAD_COUNT = "selecthing/LOAD_COUNT"
+const UPDATE = "selecthing/UPDATE"
 
 const initialState = {
   detail : {
@@ -30,7 +30,7 @@ export function loadDetail(post) {
 
 export function loadCount(post) {
   console.log(post)
-  return { type: LOAD_COUNT, post}
+  return { type: UPDATE, post}
 }
 
 // middlewares
@@ -49,16 +49,18 @@ export const loadDetailDB = (params) => {
   }
 }
 
-export const countDetailDB = (params) =>{
-  console.log(params)
-  return async function(dispatch){
-    const res = await axios.patch(`http://lightromance.shop/boards/${params}/details`);
-    console.log("res",res.data)
-    console.log(params)
-
-    dispatch(loadCount(res.data))
+export const updatePostDB = ( agree, params ) => {
+  return async function (dispatch) {
+  console.log(agree, params)
+  const res = await axios.patch(`http://lightromance.shop/boards/${params}/details`, {
+  agreeCount: agree.agreeCount,
+  disagreeCount: agree.disagreeCount,
+  agree: agree.agree,
+  disagree: agree.disagree,
+  })
+  console.log(res)
   }
-}
+  }
 
 // reducer
 export default function reducer(state = initialState, action = {} ) {
@@ -67,7 +69,7 @@ export default function reducer(state = initialState, action = {} ) {
       console.log("state", state, "action", action)
       return { detail : action.post }
     }
-    case "selecthing/LOAD_COUNT" :{
+    case "selecthing/UPDATE" :{
       console.log(state, action);
       return {state, action}
     }

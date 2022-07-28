@@ -5,10 +5,11 @@ import { useParams,useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { updatePost } from '../redux/modules/selecthing'
 import { useDispatch } from 'react-redux'
-import { loadDetailDB } from '../redux/modules/detail'
+import { loadDetailDB, createComment, createCommentDB ,updatePostDB } from '../redux/modules/detail'
+import axios from 'axios'
 
 const Detail = () => {
-
+  
   const params = useParams();
   const dispatch = useDispatch();
 
@@ -19,6 +20,7 @@ const Detail = () => {
  
   
   const post_detail = useSelector((state) => state.detail.detail)
+  console.log(post_detail)
 
   // const include = post_detail.find((post) => {
   //   if(post.id === params.id) return post
@@ -31,6 +33,7 @@ const Detail = () => {
     setSelected(e.target.value);
   };
 
+  const mbti_ref = React.useRef(null);
   const com_ref = React.useRef(null);
   
   const [ checked, setChecked ] = React.useState("");
@@ -44,9 +47,7 @@ const Detail = () => {
   
   const agree_btn = () => {
     if(post_detail.disagree === true) {
-      window.alert(
-        "이미 반대를 클릭하셨습니다.\n반대 클릭 해제 후 다시 시도해주세요."
-        )
+      window.alert("이미 반대를 클릭하셨습니다.\n반대 클릭 해제 후 다시 시도해주세요.")
       return;
     }
     if(post_detail.agree === false) {
@@ -56,7 +57,7 @@ const Detail = () => {
 
       setChecked("checked")
       window.alert("[찬성] 역시 그럴줄 알았어요 !")
-      dispatch(updatePost(post_agree, params.id))
+      dispatch(updatePostDB(post_agree, params.id))
     } else {
       post_detail.agreeCount = post_detail.agreeCount - 1
       post_detail.agree = false
@@ -64,7 +65,7 @@ const Detail = () => {
 
       setChecked("un-checked")
       window.alert("[찬성 취소] 마음이 바뀌셨나요 ?")
-      dispatch(updatePost(post_agree, params.nickname))
+      dispatch(updatePost(post_agree, params.id))
     }
   }
 
@@ -79,18 +80,38 @@ const Detail = () => {
       post_detail.disagree = true
       setChecked("checked")
       window.alert("[반대] 내가 정녕 싫으시오 ?")
-      dispatch(updatePost(post_agree, params.nickname))
+      dispatch(updatePost(post_agree, params.id))
     } else {
       post_detail.disagreeCount = post_detail.disagreeCount - 1
       post_detail.agree = false
       post_detail.disagree = false
       setChecked("un-checked")
       window.alert("[반대 취소] 역시 그럴줄 알았소 !")
-      dispatch(updatePost(post_agree, params.nickname))
+      dispatch(updatePost(post_agree, params.id))
     }
   }
+  console.log("포스트어그리", post_agree)
 
-  console.log("포스트어그리",post_agree)
+  const comment_btn = async () => {
+    if (mbti_ref.current.value === "default") {
+      window.alert("MBTI를 선택 후 댓글을 작성해주세요.")
+    } else if (com_ref.current.value === "") {
+      window.alert("댓글 내용을 작성해주세요.")
+    } else {
+      try {
+        const res = await axios.post(`http://lightromance.shop/boards/${params.id}/comments`, {
+          nickname: "abcd",
+          content: com_ref.current.value,
+          mbit: mbti_ref.current.value
+        })
+        console.log("res", res)
+        console.log(post_detail)
+        window.location.reload()
+      } catch(error) {
+        console.log(error)
+      }
+    }
+  }
 
   return (
     <div>
@@ -112,13 +133,13 @@ const Detail = () => {
 
         <BtnWrap>
           <AgreeButton onClick={agree_btn} >
-            <p style={{fontSize: "17px"}} >
+            <p>
               찬성 {post_detail.agreeCount} 표
             </p>
           </AgreeButton>
           
           <OppositionButton onClick={disagree_btn} >
-            <p style={{fontSize: "17px"}}>
+            <p>
               반대 {post_detail.disagreeCount} 표
             </p>
           </OppositionButton>
@@ -127,7 +148,7 @@ const Detail = () => {
 
         <DescReply>
             <ReplyWriteBox>
-              <SelectBtn defaultValue="default" id="mbti" name="mbti" onChange={handleSelect}>
+              <SelectBtn defaultValue="default" id="mbti" name="mbti" ref = {mbti_ref} onChange={handleSelect}>
                 <option value="default" disabled>MBTI</option>
                 <option value="ISTJ">ISTJ </option>
                 <option value="ISFJ">ISFJ</option>
@@ -146,20 +167,20 @@ const Detail = () => {
                 <option value="ENFJ">ENFJ </option>
                 <option value="ENTJ">ENTJ </option>
               </SelectBtn>
-              <ReplyInputBox type="text" placeholder='댓글을 입력하세요.' ref = { com_ref } />
-              <ReplyBtn>작성</ReplyBtn>
+              <ReplyInputBox type="text" placeholder='댓글을 입력하세요.' ref = {com_ref} />
+              <ReplyBtn onClick={comment_btn}>작성</ReplyBtn>
             </ReplyWriteBox>
             <ReplyBox>
               {
                 post_detail.comments.map((v, i) => {
-                    return (  
-                      <CommentWrap key = { i }>
-                        <div><span>{ v.mbti }</span> { v.nickname }</div>
-                        <div> → { v.comment }</div>
-                      </CommentWrap>
-                    )
-                  })
-                }
+                  return (  
+                    <CommentWrap key = { i }>
+                      <div><span>{ v.mbti }</span> { v.nickname }</div>
+                      <div> → { v.content }</div>
+                    </CommentWrap>
+                  )
+                })
+              }
             </ReplyBox>
           </DescReply>
         
@@ -175,6 +196,15 @@ const MainWrap = styled.div`
   width: 35%;
   height: 100%;
   margin: 0 auto;
+  @media (max-width: 320px) {
+    width: 95%;
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    width: 85%;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    width: 60%;
+  }
 `
 
 const SubTitle = styled.h2`
@@ -218,6 +248,15 @@ const PreView = styled.div`
     height: 100%;
     object-fit: cover;
   }
+  @media (max-width: 320px) {
+    height: 180px;
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    height: 220px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    height: 280px;
+  }
 `
 const Desc = styled.div`
   width: 100%;
@@ -231,6 +270,15 @@ const Desc = styled.div`
   border-top: none;
   border-radius: 0 0 8px 8px;
   background-color: rgba(199, 252, 236, 0.2);
+  @media (max-width: 320px) {
+    height: 70px;
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    height: 90px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    height: 110px;
+  }
 `
 
 const DescReply = styled.div`
@@ -272,6 +320,15 @@ const SelectBtn = styled.select`
   option[value="default"] {
     display: none;
   }
+  @media (max-width: 320px) {
+    font-size: 8px;
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    font-size: 10px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    font-size: 12px;
+  }
 `
 
 const ReplyInputBox = styled.input`
@@ -284,6 +341,15 @@ const ReplyInputBox = styled.input`
     padding: 0 6px; 
     box-sizing: border-box;
     outline: none;
+    @media (max-width: 320px) {
+        font-size: 8px;
+    }
+    @media (min-width: 321px) and (max-width: 768px) {
+      font-size: 10px;
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      font-size: 12px;
+    }
 `;
 
 const ReplyBtn = styled.button`
@@ -295,6 +361,15 @@ const ReplyBtn = styled.button`
     border: 1.5px solid #1ABC9C;
     margin:auto 1px;
     cursor: pointer;
+    @media (max-width: 360px) {
+      font-size: 7px;
+    }
+    @media (min-width: 361px) and (max-width: 768px) {
+      font-size: 10px;
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      font-size: 12px;
+    }
 `;
 
 const ReplyBox = styled.div`
@@ -329,13 +404,31 @@ const BtnWrap = styled.div`
     transition: 0.5s;
   }
   p {
+    font-size: 17px;
     margin: 5px auto 0; 
+  }
+  @media (max-width: 320px) {
+    height: 50px;
+    p {
+      font-size: 12px;
+    }
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    height: 56px;
+    p {
+      font-size: 14px;
+    }
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    height: 60px;
+    p {
+      font-size: 16px;
+    }
   }
 `
 
 const AgreeButton =styled.button`
-
-  padding-top:15px;
+  padding-top: 15px;
   background-color: #1ABC9C;
   border: 2px solid #1ABC9C;
   color: white;
@@ -405,6 +498,39 @@ const CommentWrap = styled.div`
     margin-top: 4px;
     margin-left: 10px;
     text-align: left;
+  }
+  @media (max-width: 320px) {
+    div:nth-of-type(1) {
+      font-size: 12px;
+      span {
+        font-size: 11px;
+      }
+    }
+    div:nth-of-type(2) {
+      font-size: 12px;
+    }
+  }
+  @media (min-width: 321px) and (max-width: 768px) {
+    div:nth-of-type(1) {
+      font-size: 13px;
+      span {
+        font-size: 12px;
+      }
+    }
+    div:nth-of-type(2) {
+      font-size: 13px;
+    }
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    div:nth-of-type(1) {
+      font-size: 14px;
+      span {
+        font-size: 13px;
+      }
+    }
+    div:nth-of-type(2) {
+      font-size: 14px;
+    }
   }
 `
 

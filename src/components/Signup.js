@@ -35,26 +35,6 @@ const Signup = (props) => {
     }
   }
 
-  const axiosNicknameCheck=async() =>{
-    const res = await axios.get("http://lightromance.shop/user/login/nickNames"
-    ,{
-      body:{"nickname" : nickname.current.value}
-    }
-    );
-    
-    window.alert(res.data.answer);
-  }
-
-  const axiosIdCheck=async() =>{
-    const res = await axios.get("http://lightromance.shop/user/login/userIds"
-    ,{
-      body :{"username" : username.current.value}
-    }
-    );
-
-    window.alert(res.data.answer);
-  }
-
   const nickname = React.useRef(null);
   const username = React.useRef(null);
   const password = React.useRef(null);
@@ -101,10 +81,6 @@ const Signup = (props) => {
                   maxLength={12}
                   ref={nickname}
                 />
-                <Button onClick={(e) => {
-                  e.preventDefault();
-                  axiosNicknameCheck();
-                }} >중복확인</Button>
               </InputWrap>
             </WriteBox>
 
@@ -117,17 +93,13 @@ const Signup = (props) => {
                   maxLength={12}
                   ref={username}
                 />
-                <Button onClick={(e) => {
-                  e.preventDefault();
-                  axiosIdCheck();
-                }}>중복확인</Button>
               </InputWrap>
             </WriteBox>
 
             <WriteBox>
               <Subject>비밀번호</Subject>
               <InputWrap>
-                <Pw
+                <Id
                   type="password"
                   placeholder="비밀번호를 입력해주세요"
                   maxLength={16}
@@ -139,7 +111,7 @@ const Signup = (props) => {
             <WriteBox>
               <Subject>비밀번호 재확인</Subject>
               <InputWrap>
-                <Pw
+                <Id
                   type="password"
                   placeholder="비밀번호 재확인"
                   maxLength={16}
@@ -238,7 +210,7 @@ const Id = styled.input`
   width: 100%;
   height: 100%;
   padding: 5px 10px;
-  border-radius: 5px 0 0 5px;
+  border-radius: 5px;
   border-bottom: 2px solid rgb(219, 232, 216);
   border: none;
   font-size: 12px;
@@ -247,35 +219,6 @@ const Id = styled.input`
   box-sizing: border-box;
   &:hover {
     box-shadow: 0 0 7px #0c7586;
-  }
-`;
-
-const Pw = styled.input`
-  width: 100%;
-  height: 100%;
-  padding: 5px 10px;
-  border-radius: 5px 5px;
-  border-bottom: 2px solid rgb(219, 232, 216);
-  border: none;
-  font-size: 12px;
-  font-weight: 500;
-  outline: none;
-  box-sizing: border-box;
-  &:hover {
-    box-shadow: 0 0 7px #0c7586;
-  }
-`;
-
-const Button = styled.button`
-  width: 80px;
-  height: 100%;
-  border: none;
-  border-radius: 0 5px 5px 0;
-  box-sizing: border-box;
-  background-color: #c7fcec;
-  cursor: pointer;
-  @media (max-width: 768px) {
-    font-size: 11px;
   }
 `;
 

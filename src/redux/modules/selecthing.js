@@ -21,24 +21,87 @@ const initialState = {
       disagree: false,
       date: "",
       mbti: "",
+      id : 1,
       comment : [
         {
-          nickname: "",
-          mbti: "",
-          comment: ""
+          nickname: "안녕",
+          mbti: "안녕",
+          comment: "안녕"
         },
         {
-          nickname: "",
-          mbti: "",
-          comment: ""
+          nickname: "안닝",
+          mbti: "안닝",
+          comment: "안닝"
         },
         {
-          nickname: "",
-          mbti: "",
-          comment: ""
+          nickname: "인닝",
+          mbti: "인닝",
+          comment: "인닝"
         }
       ]
     },
+    {
+      username: "",
+      nickname: "",
+      title: "",
+      images: "",
+      contents: "",
+      agreeCount: 0,
+      disagreeCount: 0,
+      agree: false,
+      disagree: false,
+      date: "",
+      mbti: "",
+      id : 2,
+      comment : [
+        {
+          nickname: "안녕",
+          mbti: "안녕",
+          comment: "안녕"
+        },
+        {
+          nickname: "안닝",
+          mbti: "안닝",
+          comment: "안닝"
+        },
+        {
+          nickname: "인닝",
+          mbti: "인닝",
+          comment: "인닝"
+        }
+      ]
+    },
+    {
+      username: "",
+      nickname: "",
+      title: "",
+      images: "",
+      contents: "",
+      agreeCount: 0,
+      disagreeCount: 0,
+      agree: false,
+      disagree: false,
+      date: "",
+      mbti: "",
+      id : 3,
+      comment : [
+        {
+          nickname: "안녕",
+          mbti: "안녕",
+          comment: "안녕"
+        },
+        {
+          nickname: "안닝",
+          mbti: "안닝",
+          comment: "안닝"
+        },
+        {
+          nickname: "인닝",
+          mbti: "인닝",
+          comment: "인닝"
+        }
+      ]
+    }
   ]
 } 
 
@@ -47,9 +110,9 @@ export function loadPost(post) {
   return { type: LOAD, post }
 }
 
-export function updatePost(post, nickname) {
-  console.log("확인", post, nickname)
-  return { type: UPDATE, post, nickname }
+export function updatePost(post, params) {
+  console.log("확인", post, params)
+  return { type: UPDATE, post, params }
 }
 
 export function createPost(post) {
