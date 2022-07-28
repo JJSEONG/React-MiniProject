@@ -17,10 +17,7 @@ const Detail = () => {
     dispatch(loadDetailDB(params.id))
   }, [])
   
- 
-  
   const post_detail = useSelector((state) => state.detail.detail)
-  console.log(post_detail)
 
   // const include = post_detail.find((post) => {
   //   if(post.id === params.id) return post
@@ -90,8 +87,7 @@ const Detail = () => {
       dispatch(updatePost(post_agree, params.id))
     }
   }
-  console.log("포스트어그리", post_agree)
-
+  
   const comment_btn = async () => {
     if (mbti_ref.current.value === "default") {
       window.alert("MBTI를 선택 후 댓글을 작성해주세요.")
@@ -99,13 +95,15 @@ const Detail = () => {
       window.alert("댓글 내용을 작성해주세요.")
     } else {
       try {
+        const Token = sessionStorage.getItem("token")
         const res = await axios.post(`http://lightromance.shop/boards/${params.id}/comments`, {
-          nickname: "abcd",
           content: com_ref.current.value,
           mbit: mbti_ref.current.value
-        })
-        console.log("res", res)
-        console.log(post_detail)
+        }, {
+          headers: {
+            "Authorization": Token
+          }
+        });
         window.location.reload()
       } catch(error) {
         console.log(error)

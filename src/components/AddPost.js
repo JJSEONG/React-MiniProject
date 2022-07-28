@@ -17,7 +17,7 @@ const AddPost = () => {
   const [ files, setFiles ] = React.useState(temp_img);
   const [ filestxt, setFilesTxt ] = React.useState("");
 
-  console.log(files)
+  // console.log(files)
 
   const saveFileImage = async (e) => {
     const uploaded_file = await uploadBytes(
@@ -30,7 +30,6 @@ const AddPost = () => {
     file_link_ref.current = { url: file_url };
 
     const file = e.target.files
-    console.log(file)
 
     const reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]); // 내가 올릴 img
@@ -68,10 +67,9 @@ const AddPost = () => {
           mbti: mbti_ref.current.value,
         }, {
           headers: {
-            "token": Token
+            "Authorization": Token
           }
         });
-      console.log(res)
 
       e.preventDefault();
       window.alert("게시글 작성에 성공하셨습니다.")
