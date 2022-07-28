@@ -29,7 +29,6 @@ export default function reducer(state = initialState, action = {} ) {
       return state;
     }
     case "lists/CREATE": {
-        console.log(state);
         const new_list = [...state.post, action.lists];
         return { post: new_list };
       }

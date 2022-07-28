@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createList } from "../redux/modules/reduxsignup";
 import axios from "axios";
 
@@ -42,8 +42,6 @@ const Signup = (props) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const my_lists = useSelector((state) => state.reduxsignup);
 
   const saveWord = (e) => {
     if(nickname.current.value===""||username.current.value===""||password.current.value===""||password2.current.value==="") {
