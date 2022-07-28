@@ -1,13 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 
 const Posts = ({ data }) => {
 
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  
+  const navigate = useNavigate()  
 
   const loadDetail = () => {
     try {

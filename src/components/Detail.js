@@ -1,11 +1,11 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import Header from './elements/Header'
 import { useParams,useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { updatePost } from '../redux/modules/selecthing'
 import { useDispatch } from 'react-redux'
-import { loadDetailDB, createComment, createCommentDB ,updatePostDB } from '../redux/modules/detail'
+import { loadDetailDB, updatePostDB } from '../redux/modules/detail'
 import axios from 'axios'
 
 const Detail = () => {

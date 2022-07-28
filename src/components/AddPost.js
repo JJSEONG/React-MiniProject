@@ -1,19 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 import Header from './elements/Header'
-import Logo from '../깻잎논쟁.png'
-import { createPost } from '../redux/modules/selecthing'
-import { db, storage } from '../shared/firebase'
+import { storage } from '../shared/firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import axios from 'axios'
 
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 
 const AddPost = () => {
   
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const file_link_ref = React.useRef(null);
   
