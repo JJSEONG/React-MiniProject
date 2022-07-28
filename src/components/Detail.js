@@ -17,6 +17,8 @@ const Detail = () => {
     dispatch(loadDetailDB(params.id))
   }, [])
   
+ 
+  
   const post_detail = useSelector((state) => state.detail.detail)
   console.log(post_detail)
 
